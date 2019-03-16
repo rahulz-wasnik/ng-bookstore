@@ -1,0 +1,5 @@
+
+@mixin google-fonts($fonts) {
+    $fonts: unquote($fonts);
+    @import url(https://fonts.googleapis.com/css?family=#{$fonts});
+}

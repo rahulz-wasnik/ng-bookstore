@@ -1,0 +1,27 @@
+<mat-toolbar role="toolbar" aria-label="Bookstore menu" color="primary">
+    <span>
+        <a mat-button aria-label="My Book App" aria-disabled="false">
+            <span><i class="fas fa-book-reader"></i></span> My Book App
+        </a>
+    </span>
+    <span class="app-flex-space"></span>
+    <span class="app-md-device">
+        <span>
+            <a mat-button aria-disabled="false">
+             <span><i class="fas fa-list-ul"></i></span> Listings
+            </a>
+        </span>
+        <span>
+            <a mat-button aria-disabled="false">
+                <span><i class="fas fa-plus-circle"></i></span> Add a book
+            </a>
+        </span>
+    </span>
+    <span class="app-sm-device">
+        <button mat-button [matMenuTriggerFor]="bookstoreMenu">Menu<i class="fas fa-caret-down"></i></button>
+        <mat-menu #bookstoreMenu="matMenu">
+           <button mat-menu-item>Listings</button>
+           <button mat-menu-item>Add a book</button>
+        </mat-menu>
+    </span>
+</mat-toolbar>

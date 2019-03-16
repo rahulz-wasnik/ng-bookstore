@@ -1,1 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/pink-bluegrey.css';
+@import 'variables';
+@import 'mixins';
+
+@include google-fonts($theme-font);
+
+.app-background {
+    background: $background-color;
+    font-family: $theme-font;
+    color: $theme-font-color;
+}
+
+.mat-primary {
+    background: $navbar-background-color;
+}

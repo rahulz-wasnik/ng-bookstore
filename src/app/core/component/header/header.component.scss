@@ -1,0 +1,39 @@
+mat-button mat-button:hover {
+    color: inherit;
+    background: transparent;   
+}
+
+.fas {
+    margin: 0 4px 3px 5px;
+}
+
+mat-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.app-flex-space {
+    flex: 1 1 auto;
+}
+
+@media screen and (max-width: 576px) {
+
+        .app-md-device {
+            display: none;
+        }
+
+        .app-sm-device {
+            display: block;
+        }
+}
+
+@media screen and (min-width: 576px) {
+
+        .app-md-device {
+            display: block;
+        }
+
+        .app-sm-device {
+            display: none;
+        }
+}    
