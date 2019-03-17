@@ -1,0 +1,25 @@
+mat-card {
+    margin: auto;
+    text-align: center;
+    background: transparent;
+}
+
+mat-form-field {
+    color: inherit;
+    background: transparent;   
+}
+
+@media screen and (min-width: 768px) {
+    
+            mat-card {
+                width: 50%;
+            }
+
+            mat-form-field {
+               width: 50%;   
+            }
+    }
+
+.test {
+    justify-content: left !important;
+}

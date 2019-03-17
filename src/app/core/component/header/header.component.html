@@ -1,27 +1,28 @@
 <mat-toolbar role="toolbar" aria-label="Bookstore menu" color="primary">
     <span>
-        <a mat-button aria-label="My Book App" aria-disabled="false">
+        <a mat-button aria-label="My Book App" aria-disabled="false" routerLink="home">
             <span><i class="fas fa-book-reader"></i></span> My Book App
         </a>
     </span>
     <span class="app-flex-space"></span>
     <span class="app-md-device">
         <span>
-            <a mat-button aria-disabled="false">
+            <a mat-button aria-disabled="false" routerLink="../book/listings">
              <span><i class="fas fa-list-ul"></i></span> Listings
             </a>
         </span>
         <span>
-            <a mat-button aria-disabled="false">
+            <a mat-button aria-disabled="false" routerLink="../book/add">
                 <span><i class="fas fa-plus-circle"></i></span> Add a book
             </a>
         </span>
     </span>
     <span class="app-sm-device">
-        <button mat-button [matMenuTriggerFor]="bookstoreMenu">Menu<i class="fas fa-caret-down"></i></button>
+        <button mat-button [matMenuTriggerFor]="bookstoreMenu">Menu<i class="fas fa-caret-down" 
+            aria-label="Choose option" aria-disabled="false"></i></button>
         <mat-menu #bookstoreMenu="matMenu">
-           <button mat-menu-item>Listings</button>
-           <button mat-menu-item>Add a book</button>
+           <button mat-menu-item routerLink="../book/listings">Listings</button>
+           <button mat-menu-item routerLink="../book/add">Add a book</button>
         </mat-menu>
     </span>
 </mat-toolbar>
