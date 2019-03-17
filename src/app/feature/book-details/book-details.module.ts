@@ -10,7 +10,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { BookDetailsRoutingModule } from './book-details-routing.module';
 import { SharedModule } from './../../shared/shared.module';
 import { reducer } from './store/book.reducer';
-import { BookEffects } from './store/book.effect';
+import { BookEffect } from './store/book.effect';
 
 // Components
 import { BookDetailsPageComponent } from './book-details-page/book-details-page.component';
@@ -24,8 +24,8 @@ import { ConfirmDailogueComponent } from './../../shared/component/confirm-dailo
     BookDetailsRoutingModule,
     SharedModule,
     ReactiveFormsModule,
-    StoreModule.forFeature('post', reducer),
-    EffectsModule.forFeature([BookEffects])    
+    StoreModule.forFeature('book', reducer),
+    EffectsModule.forFeature([BookEffect])    
   ],
   entryComponents: [
     ConfirmDailogueComponent

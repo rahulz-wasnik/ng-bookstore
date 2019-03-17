@@ -34,6 +34,7 @@ import { AppComponent } from './app.component';
       maxAge: 25,
       logOnly: environment.production
     }),
+    EffectsModule.forRoot([]),
     StoreRouterConnectingModule
   ],
   providers: [],

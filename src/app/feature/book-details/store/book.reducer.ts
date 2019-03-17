@@ -49,6 +49,14 @@ export function reducer(state = fromBookStore.initialState,
                 ...state,
                 error: action.payload
             }
+
+        case fromBookStore.BookActionTypes.ClearError:
+
+            return {
+                ...state,
+                error: null
+            }
+
         default:
             return state;
     }

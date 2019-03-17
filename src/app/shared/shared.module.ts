@@ -14,6 +14,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatPaginatorModule} from '@angular/material/paginator';
 
 import { ConfirmDailogueComponent } from './component/confirm-dailogue/confirm-dailogue.component';
+import { AlertDailogueComponent } from './component/alert-dailogue/alert-dailogue.component';
 
 
 @NgModule({
@@ -44,8 +45,12 @@ import { ConfirmDailogueComponent } from './component/confirm-dailogue/confirm-d
     MatExpansionModule,
     MatPaginatorModule
   ],
+  entryComponents:[
+    AlertDailogueComponent
+  ],
   declarations: [
-    ConfirmDailogueComponent
+    ConfirmDailogueComponent,
+    AlertDailogueComponent
   ]
 })
 export class SharedModule { }

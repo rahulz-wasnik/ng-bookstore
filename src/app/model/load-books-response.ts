@@ -1,7 +1,10 @@
 
 import { Book } from './book';
 
-export interface LoadBookResponse {
+export class LoadBookResponse {
+
     books: Book[];
     count: number;
+
+    constructor() {}
 }

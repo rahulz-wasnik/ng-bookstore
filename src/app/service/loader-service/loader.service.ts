@@ -15,7 +15,12 @@ export class LoaderService {
   constructor(private http: HttpClient,
     private errorHandlerService: ErrorHandlerService) { }
 
-  load(pageSize: number, pageIndex: number): Observable<LoadBookResponse> {
+  loadCategories() {
+    
+  }
+
+  loadBooks(pageSize: number, pageIndex: number): Observable<LoadBookResponse> {
+    console.log('load');
     const queryParams = `?pageSize=${pageSize}&pageIndex=${pageIndex + 1}`;
     return this.http.get<LoadBookResponse>(environment.api + 'posts' + queryParams).pipe(
       catchError(error => this.errorHandlerService.handleError(error))
