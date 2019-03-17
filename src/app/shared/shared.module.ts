@@ -10,6 +10,8 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 import { ConfirmDailogueComponent } from './component/confirm-dailogue/confirm-dailogue.component';
 
@@ -25,7 +27,9 @@ import { ConfirmDailogueComponent } from './component/confirm-dailogue/confirm-d
     MatInputModule,
     MatSelectModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatExpansionModule,
+    MatPaginatorModule
   ],
   exports: [
     MatToolbarModule,
@@ -36,7 +40,9 @@ import { ConfirmDailogueComponent } from './component/confirm-dailogue/confirm-d
     MatInputModule,
     MatSelectModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatExpansionModule,
+    MatPaginatorModule
   ],
   declarations: [
     ConfirmDailogueComponent

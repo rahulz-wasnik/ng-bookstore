@@ -1,3 +1,39 @@
-<p>
-  book-listings works!
-</p>
+<!-- <mat-spinner *ngIf="operationInProgress"></mat-spinner> -->
+
+<mat-card>
+  <mat-card-title></mat-card-title>
+  <mat-card-content>
+      <div *ngIf="!operationInProgress">
+          <div *ngIf="books && books.length > 0; else noBooks">
+                  <div class="app-mt-1" *ngFor="let book of books">
+                          <mat-accordion>
+                                  <mat-expansion-panel>
+                                          <mat-expansion-panel-header>
+                                                  <mat-panel-title>
+                                                          {{book.title}}
+                                                  </mat-panel-title>
+                                          </mat-expansion-panel-header>
+                                          <div class="app-mt-1">
+                                                  {{book.category}}
+                                          </div>                                        
+                                          <div class="app-mt-1">
+                                                  {{book.description}}
+                                          </div>                                        
+                                  </mat-expansion-panel>
+                          </mat-accordion>
+                  </div>
+          </div>
+          <ng-template #noBooks>
+                  <div class="app-text-center mat-body-1">No books have been added yet.</div>
+          </ng-template>
+  </div>
+  </mat-card-content>
+</mat-card>
+
+<div class="app-mt-1">
+        <mat-paginator [length]="count$ | async" *ngIf="books && books.length > 0"
+                [pageSize]="pageSize" 
+                [pageSizeOptions]="pageSizeOptions" 
+                (page)="onPageChange($event)">
+        </mat-paginator>
+</div>

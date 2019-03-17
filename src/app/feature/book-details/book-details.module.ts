@@ -3,10 +3,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 // Application Modules
 import { BookDetailsRoutingModule } from './book-details-routing.module';
 import { SharedModule } from './../../shared/shared.module';
+import { reducer } from './store/book.reducer';
+import { BookEffects } from './store/book.effect';
 
 // Components
 import { BookDetailsPageComponent } from './book-details-page/book-details-page.component';
@@ -16,11 +20,12 @@ import { ConfirmDailogueComponent } from './../../shared/component/confirm-dailo
 
 @NgModule({
   imports: [
-  
-CommonModule,
+    CommonModule,
     BookDetailsRoutingModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    StoreModule.forFeature('post', reducer),
+    EffectsModule.forFeature([BookEffects])    
   ],
   entryComponents: [
     ConfirmDailogueComponent
