@@ -25,7 +25,7 @@ export class BookListingsComponent implements OnInit, OnDestroy {
 
   pageIndex: number = fromBookStore.initialState.pageIndex;
 
-  count$: Observable<number>;
+  count: number;
 
   error: string;
 
@@ -45,7 +45,13 @@ export class BookListingsComponent implements OnInit, OnDestroy {
       }
     );
     
-    this.count$ = this.store.pipe(select(fromBookStore.getCount));
+    this.store.pipe(select(fromBookStore.getCount)).pipe(
+      takeWhile(() => this.componentActive)
+    ).subscribe(
+      response => {
+        this.count = response
+      }
+    );
     
     this.store.pipe(select(fromBookStore.getError)).pipe(
       takeWhile(() => this.componentActive)
@@ -55,6 +61,7 @@ export class BookListingsComponent implements OnInit, OnDestroy {
       }
     );
     
+    // TODO: Move to a different component
     this.store.pipe(select(fromBookStore.getOperationInProgress)).pipe(
       takeWhile(() => this.componentActive)
     ).subscribe(

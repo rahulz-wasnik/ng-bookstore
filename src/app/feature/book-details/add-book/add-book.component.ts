@@ -20,7 +20,6 @@ import { AlertDailogueComponent } from './../../../shared/component/alert-dailog
 export class AddBookComponent implements OnInit {
 
   appForm: FormGroup;
-
   error$: Observable<string>;  
 
   constructor(private appService: AppService, 
@@ -58,7 +57,13 @@ export class AddBookComponent implements OnInit {
       
       dialogRef.afterClosed().subscribe(result => {
         if(result) {
-          this.store.dispatch(new fromBookStore.AddBook(Object.assign(new Book(), this.appForm.value)))
+          const book: Book = {
+            id: '',
+            title: this.title.value,
+            category: this.category.value,
+            description: this.description.value
+          }
+          this.store.dispatch(new fromBookStore.AddBook(book))
         }
         // this.onBookAdded();
       }); 

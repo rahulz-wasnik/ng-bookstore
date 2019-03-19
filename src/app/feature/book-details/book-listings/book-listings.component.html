@@ -2,11 +2,11 @@
 
 <div *ngIf="(!operationInProgress && !error); else errorBlock">
         <mat-card>
-                <mat-card-title></mat-card-title>
+                <mat-card-title>{{count}}</mat-card-title>
                 <mat-card-content>
                         <div>
                                 <div *ngIf="books && books.length > 0; else noBooks">
-                                        <div class="app-mt-1" *ngFor="let book of books">
+                                        <div class="app-mt-1" *ngFor="let book of books; let i = index;">
                                                 <mat-accordion>
                                                         <mat-expansion-panel>
                                                                 <mat-expansion-panel-header>
@@ -14,10 +14,10 @@
                                                                                 {{book.title}}
                                                                         </mat-panel-title>
                                                                 </mat-expansion-panel-header>
-                                                                <div class="app-mt-1">
+                                                                <div id="category{{i}}" class="app-mt-1">
                                                                         {{book.category}}
                                                                 </div>
-                                                                <div class="app-mt-1">
+                                                                <div id="description{{i}}" class="app-mt-1">
                                                                         {{book.description}}
                                                                 </div>
                                                         </mat-expansion-panel>
@@ -32,7 +32,7 @@
         </mat-card>
 
         <div class="app-mt-1">
-                <mat-paginator [length]="count$ | async" *ngIf="books && books.length > 0" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                <mat-paginator [length]="count" *ngIf="books && books.length > 0" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
                         (page)="onPageChange($event)">
                 </mat-paginator>
         </div>

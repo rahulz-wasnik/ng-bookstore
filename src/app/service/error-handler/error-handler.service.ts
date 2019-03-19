@@ -8,7 +8,7 @@ import { throwError, Observable } from 'rxjs';
 })
 export class ErrorHandlerService {
 
-    handleError(error: HttpErrorResponse): Observable<any> {
+    handleError(error: HttpErrorResponse): Observable<HttpErrorResponse> {
         if(error.error instanceof ErrorEvent) {
             console.error('An error has occured:', error.error.message);
         } else {

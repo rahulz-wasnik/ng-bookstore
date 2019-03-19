@@ -20,10 +20,7 @@ export class LoaderService {
   }
 
   loadBooks(pageSize: number, pageIndex: number): Observable<LoadBookResponse> {
-    console.log('load');
     const queryParams = `?pageSize=${pageSize}&pageIndex=${pageIndex + 1}`;
-    return this.http.get<LoadBookResponse>(environment.api + 'posts' + queryParams).pipe(
-      catchError(error => this.errorHandlerService.handleError(error))
-    )
+    return this.http.get<LoadBookResponse>(environment.api + 'book' + queryParams);
   }
 }
