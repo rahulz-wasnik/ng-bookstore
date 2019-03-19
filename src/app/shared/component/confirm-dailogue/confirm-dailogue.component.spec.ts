@@ -44,19 +44,19 @@ describe('ConfirmDailogueComponent', () => {
     expect(fixture.debugElement.nativeElement.querySelector('h1').innerText).toContain('Kindly confirm.');
   });
 
-  it('should call the close method on the mat dailog when the onClose function is executed', () => {
+  it('should call the close method on the mat dailog when the onClose event is executed', () => {
     spyOn(matDialogRef, 'close').and.callThrough();
     component.onClose();
     expect(matDialogRef.close).toHaveBeenCalledWith(false);
   });
 
-  it('should call the close method on the mat dailog when the onOk function is executed', () => {
+  it('should call the close method on the mat dailog when the onOk event is executed', () => {
     spyOn(matDialogRef, 'close').and.callThrough();
     component.onOk();
     expect(matDialogRef.close).toHaveBeenCalledWith(true);
   });
 
-  it('should call the onOk function when the Ok button is clicked', async(() => {
+  it('should call the onOk event when the Ok button is clicked', async(() => {
     spyOn(component, 'onOk');
 
     let button = fixture.debugElement.queryAll(By.css('button'))[1].nativeElement;
@@ -68,7 +68,7 @@ describe('ConfirmDailogueComponent', () => {
     });
   }));
 
-  it('should call the onClose function when the Ok button is clicked', async(() => {
+  it('should call the onClose event when the Ok button is clicked', async(() => {
     spyOn(component, 'onClose');
 
     let button = fixture.debugElement.queryAll(By.css('button'))[0].nativeElement;

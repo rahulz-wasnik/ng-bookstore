@@ -12,7 +12,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AddBookComponent } from './add-book.component';
 import { AppService } from './../../../service/app-service/app.service';
 import { Store } from '@ngrx/store';
-import { TestStore } from './../../../store/mock.store';
+import { MockStore } from './../../../store/mock.store';
 import * as fromBookStore from '../store';
 import { Book } from './../../../model/book';
 
@@ -32,7 +32,7 @@ class MockMatSnackBar {
 describe('AddBookComponent', () => {
   let component: AddBookComponent;
   let fixture: ComponentFixture<AddBookComponent>;
-  let store: TestStore<fromBookStore.BookState>;
+  let store: MockStore<fromBookStore.BookState>;
   let appService: AppService;
   let matDialog: MockMatDailog;
 
@@ -43,7 +43,7 @@ describe('AddBookComponent', () => {
         AppService,
         { provide: MatDialog, useClass: MockMatDailog },
         { provide: MatSnackBar, useClass: MockMatSnackBar },
-        { provide: Store, useClass: TestStore }
+        { provide: Store, useClass: MockStore }
       ],
       imports: [
         BrowserAnimationsModule,
@@ -160,7 +160,7 @@ describe('AddBookComponent', () => {
     expect(fixture.debugElement.query(By.css('.mat-error')).nativeElement.textContent).toContain('Please enter a description');
   });
 
-  it('should call the onAdd function when the Add button is clicked', async(() => {
+  it('should call the onAdd event when the Add button is clicked', async(() => {
     spyOn(component, 'onAdd');
   
     let button = fixture.debugElement.nativeElement.querySelector('button');
