@@ -16,10 +16,8 @@ import { BookError } from './../../../shared/constant/error.constant';
 })
 export class BookEffect {
 
-    constructor(private action$: Actions, 
-        private router: Router,
-        private loaderService: LoaderService,
-        private bookManagementService: BookManagementService) {
+    constructor(private action$: Actions,
+        private loaderService: LoaderService) {
     }
 
     @Effect()
@@ -37,13 +35,13 @@ export class BookEffect {
         ))
     );
 
-    @Effect()
-    addBook$ = this.action$.pipe(
-        ofType(fromBookStore.BookActionTypes.AddBook),
-        mergeMap((action: fromBookStore.AddBook)  => this.bookManagementService.add(action.payload).pipe(
-            map(response => new fromBookStore.AddBookSuccess(response)),
-            catchError(error => of(new fromBookStore.AddBookFail(BookError.addBookFail)))
-        ))
-    );
+    // @Effect()
+    // addBook$ = this.action$.pipe(
+    //     ofType(fromBookStore.BookActionTypes.AddBook),
+    //     mergeMap((action: fromBookStore.AddBook)  => this.bookManagementService.add(action.payload).pipe(
+    //         map(response => new fromBookStore.AddBookSuccess(response)),
+    //         catchError(error => of(new fromBookStore.AddBookFail(BookError.addBookFail)))
+    //     ))
+    // );
 
 }

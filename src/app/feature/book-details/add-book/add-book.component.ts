@@ -20,7 +20,6 @@ import { AlertDailogueComponent } from './../../../shared/component/alert-dailog
 export class AddBookComponent implements OnInit {
 
   appForm: FormGroup;
-
   error$: Observable<string>;  
 
   constructor(private appService: AppService, 

@@ -27,7 +27,7 @@
       
             <div>
               <mat-form-field>
-                <textarea matInput id="name" name="description" placeholder="Description *" formControlName="description" aria-label="description"
+                <textarea matInput id="description" name="description" placeholder="Description *" formControlName="description" aria-label="description"
                   rows="5"></textarea>
                 <mat-error *ngIf="description.touched && !description.valid && description.errors && description.errors.required">
                   Please enter a description

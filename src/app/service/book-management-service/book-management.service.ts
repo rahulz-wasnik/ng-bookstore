@@ -14,7 +14,7 @@ export class BookManagementService {
 
   add(book: Book): Observable<Book> {
     return this.http.post<Book>(environment.api + 'book/add', JSON.stringify(book)).pipe(
-        tap(response => console.info('Post created - ', JSON.stringify(response)))
+      tap(response => console.info('Post created - ', JSON.stringify(response)))
     );
-}
+  }
 }
