@@ -116,12 +116,18 @@ describe('AddBookComponent', () => {
     component.appForm.get('title').setValue('Title');
     component.appForm.get('category').setValue('category');
     component.appForm.get('description').setValue('description');
+    const book: Book = {
+      id: '',
+      title:  component.appForm.get('title').value,
+      category:  component.appForm.get('category').value,
+      description:  component.appForm.get('description').value
+    }
     spyOn(matDialog, 'open').and.callThrough();
     spyOn(store, 'dispatch').and.callThrough();
     component.onAdd();
     expect(matDialog.open).toHaveBeenCalled();
     expect(store.dispatch).toHaveBeenCalledWith(
-      new fromBookStore.AddBook(Object.assign(new Book(), component.appForm.value));
+      new fromBookStore.AddBook(book));
   });
 
   it('should display a title field when the page is loaded', () => {
