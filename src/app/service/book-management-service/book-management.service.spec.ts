@@ -29,24 +29,6 @@ describe('BookManagementService', () => {
     expect(service).toBeTruthy();
   }));
 
-  it('should issue a add book request', async() =>{
-    const book: Book = {
-      _id: '1',
-      title:  'Title',
-      category:  'category',
-      description:  'description'
-    }
-    service.add(book).subscribe();
-
-    const req = httpTestingController.expectOne((req: HttpRequest<any>) => {
-      return req.method === 'POST'
-    }, '');
-
-    expect(req.request.url).toBe(environment.api+'book/add');
-    
-    req.flush({});
-  });
-
   it('should add a book and return the Observable<Book> with a unique id', async () => {
     const book: Book = {
       _id: '',
@@ -63,11 +45,28 @@ describe('BookManagementService', () => {
       return req.method === 'POST'
     }, '');
 
+    expect(req.request.url).toBe(environment.api+'book/add');
+
     req.flush({
-      id: '1',
+      _id: '1',
       title: 'Title',
       category: 'Category',
       description: 'Description'
+    });
+  });
+
+  it('should issue a delete request with a unique id', async () => {
+
+    service.delete('1').subscribe();
+
+    const req = httpTestingController.expectOne((req: HttpRequest<any>) => {
+      return req.method === 'DELETE'
+    }, '');
+
+    expect(req.request.url).toContain(environment.api+'book/delete/1');
+
+    req.flush({
+      _id: '1'
     });
   });
 });

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { PageEvent } from '@angular/material'
@@ -8,10 +8,12 @@ import { MatSnackBar } from '@angular/material';
 
 import { Book } from './../../../model/book';
 import * as fromBookStore from '../store';
-import { getBooks } from './../store/book.selector';
+import { getBooks, getOperationInProgress, getActionStatus } from './../store/book.selector';
 import { ConfirmDailogueComponent } from './../../../shared/component/confirm-dailogue/confirm-dailogue.component';
 import { BookError } from './../../../shared/constant/error.constant';
 import { AppConstant } from './../../../shared/constant/app.constant';
+import { Options } from './../../../model/options';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-book-listings',
@@ -30,45 +32,59 @@ export class BookListingsComponent implements OnInit, OnDestroy {
   deletionInProgress: boolean = false;
   componentActive: boolean = true;
   firstLoad: boolean = true;
+  options: Options[];
 
   constructor(private store: Store<fromBookStore.State>,
     private dialog: MatDialog,
     private snackBar: MatSnackBar) { }
 
   ngOnInit() {
+    this.getOptionsFromStore();
+    this.getBooksFromStore();
+    this.getCountFromStore();
+    this.getErrorFromStore();
+    this.getOperationInProgressFromStore();
+    this.getActionStatusFromStore();
+  }
+
+  getOptionsFromStore(): void {
+    this.store.dispatch(new fromBookStore.GetOptions());
+    this.store.pipe(select(fromBookStore.getOptions)).pipe(
+      takeWhile(() => this.componentActive)
+    ).subscribe(response => this.options = response);
+  }
+
+  getBooksFromStore(): void {
+    this.store.pipe(select(fromBookStore.getBooks)).subscribe(response => this.books = response);
+  }
+
+  getCountFromStore(): void {
     this.store.dispatch(new fromBookStore.GetTotalNumberOfBooks(true));
-
-    this.store.pipe(select(fromBookStore.getBooks)).subscribe(
-      response => {
-        this.books = response;
-      }
-    );
-
     this.store.pipe(select(fromBookStore.getCount)).pipe(
       takeWhile(() => this.componentActive)
     ).subscribe(
       response => {
-        this.count = response
-        if(response > 0 && this.books.length == 0) {
-          this.pageIndex = this.pageIndex > 0 ? --this.pageIndex : this.pageIndex;      
+        this.count = response;
+        if (response >= this.pageSize && this.books.length < this.pageSize) {
+          this.pageIndex = this.pageIndex > 0 ? --this.pageIndex : this.pageIndex;
           this.store.dispatch(new fromBookStore.LoadBook(this.pageSize, this.pageIndex));
         }
       });
+  }
 
+  getErrorFromStore(): void {
     this.store.pipe(select(fromBookStore.getError)).pipe(
       takeWhile(() => this.componentActive)
-    ).subscribe(
-      response => {
-        this.error = response
-      }
-      );
+    ).subscribe(response => this.error = response)
+  }
 
+  getOperationInProgressFromStore(): void {
     this.store.pipe(select(fromBookStore.getOperationInProgress)).pipe(
       takeWhile(() => this.componentActive)
-    ).subscribe(
-      response => this.operationInProgress = response
-      );
+    ).subscribe(response => this.operationInProgress = response);
+  }
 
+  getActionStatusFromStore(): void {
     this.store.pipe(select(fromBookStore.getActionStatus)).pipe(
       takeWhile(() => this.componentActive)
     ).subscribe(
@@ -77,8 +93,7 @@ export class BookListingsComponent implements OnInit, OnDestroy {
         if (response !== 0) {
           this.onBookDeleted(response);
         }
-      }
-      );
+      });
   }
 
   ngOnDestroy() {
@@ -119,5 +134,11 @@ export class BookListingsComponent implements OnInit, OnDestroy {
     this.snackBar.open(message, '', {
       duration: 2000,
     });
+  }
+
+  getOptionLabel(value: string): string {
+    return this.options.find(element => {
+      return element.value === value;
+    }).label
   }
 }

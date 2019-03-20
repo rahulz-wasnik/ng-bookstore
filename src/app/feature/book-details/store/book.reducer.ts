@@ -70,7 +70,7 @@ export function reducer(state = fromBookStore.initialState,
 
             return {
                 ...state,
-                books: [...state.books, ...action.payload],
+                books: action.payload,
                 operationInProgress: false,
             }
 
@@ -133,7 +133,7 @@ export function reducer(state = fromBookStore.initialState,
             return {
                 ...state,
                 error: null,
-                actionStatus: 0
+                actionStatus: 0,
             }
 
         default:

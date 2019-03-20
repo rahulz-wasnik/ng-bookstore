@@ -13,7 +13,7 @@ const routes: Routes = [
   {
     path: '', component: BookDetailsPageComponent, children: [
       { path: RouteConstant.listings, component: BookListingsComponent },
-      { path: RouteConstant.add, component: AddBookComponent }
+      { path: RouteConstant.add, component: AddBookComponent },
       { path: '', redirectTo: RouteConstant.listings, pathMatch: 'full' },
       { path: '**', redirectTo: RouteConstant.listings, pathMatch: 'full' }
     ]

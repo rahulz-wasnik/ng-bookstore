@@ -21,5 +21,5 @@ export class BookManagementService {
 
   delete(_id: string): Observable<string> {
     return this.http.delete<string>(environment.api + 'book/delete/' + _id)
-}
+  }
 }
