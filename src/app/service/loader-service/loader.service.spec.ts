@@ -31,39 +31,38 @@ describe('LoaderService', () => {
     expect(service).toBeTruthy();
   }));
 
-  it('should issue a load books request', async() =>{
+  it('should issue a load books request', async () => {
     service.loadBooks(2, 0).subscribe();
-
     const req = httpTestingController.expectOne((req: HttpRequest<any>) => {
       return req.method === 'GET'
     }, '');
-
-    expect(req.request.url).toBe(environment.api+'book?pageSize=2&pageIndex=1');
-    
-    req.flush({});
+    expect(req.request.url).toBe(environment.api + 'book?pageSize=2&pageIndex=1');
+    req.flush({
+      books: [
+        {
+          id: '1',
+          title: 'Title 1',
+          category: 'Category 1',
+          description: 'Description 1'
+        },
+        {
+          id: '2',
+          title: 'Title 2',
+          category: 'Category 2',
+          description: 'Description 2'
+        }
+      ],
+      count: 2
+    });
   });
 
   it('should return an Observable<LoadBookResponse>', async () => {
-    const mockResponse = new LoadBookResponse();
-    const books = new Array<Book>();
-    let book_1 = new Book();
-    book_1.title = 'First Title';
-    book_1.category = 'First Category';
-    book_1.description = 'First Description';
-    let book_2 = new Book();
-    book_2.title = 'Second Title';
-    book_2.category = 'Second Category';
-    book_2.description = 'Second Description';
-    books.push(book_1);
-    books.push(book_2);
-    mockResponse.count = 2;
-    mockResponse.books = books;
 
     service.loadBooks(2, 0)
       .subscribe(response => {
-        expect(response.books[0].title).toEqual('First Title');
-        expect(response.books[0].category).toEqual('First Category');
-        expect(response.books[0].description).toEqual('First Description');
+        expect(response.books[0].title).toEqual('Title 1');
+        expect(response.books[0].category).toEqual('Category 1');
+        expect(response.books[0].description).toEqual('Description 1');
         expect(response.count).toBe(2);
       });
 
@@ -71,6 +70,22 @@ describe('LoaderService', () => {
       return req.method === 'GET'
     }, '');
 
-    req.flush(mockResponse);
+    req.flush({
+      books: [
+        {
+          id: '1',
+          title: 'Title 1',
+          category: 'Category 1',
+          description: 'Description 1'
+        },
+        {
+          id: '2',
+          title: 'Title 2',
+          category: 'Category 2',
+          description: 'Description 2'
+        }
+      ],
+      count: 2
+    });
   });
 });

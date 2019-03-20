@@ -42,7 +42,8 @@ describe('HomePageComponent', () => {
   });
 
   it('should display a welcome message', () => {
-    expect(fixture.debugElement.nativeElement.querySelector('#homeContent').innerText).toContain('Welcome to a book app...Start by viewing our collection')
+    expect(fixture.debugElement.nativeElement.querySelector('#homeContent').innerText).
+      toContain('Welcome to a book app...Start by viewing our collection')
   });
 
   it('should display a button which takes the user to book listing page', () => {
@@ -52,7 +53,7 @@ describe('HomePageComponent', () => {
   it('should navigate to book listing page when the View all the books button is clicked', async(() => {
     fixture.debugElement.query(By.css('a')).nativeElement.click();
     fixture.whenStable().then(() => {
-      expect(location.path()).toEqual(RouteConstant.book + '/' + RouteConstant.listings);
+      expect(location.path()).toContain(RouteConstant.book + '/' + RouteConstant.listings);
     });
   }));
 
