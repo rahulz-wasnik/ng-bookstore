@@ -20,15 +20,23 @@
                                                                         </mat-panel-title>
                                                                 </mat-expansion-panel-header>
                                                                 <div id="category{{i}}" class="app-mt-1">
-                                                                        {{getOptionLabel(book.category)}}
+                                                                        <span class="mat-body-strong mat-body-2">
+                                                                                Category -
+                                                                        </span>
+                                                                        <span class="mat-small mat-caption">
+                                                                                {{getOptionLabel(book.category)}}
+                                                                        </span>
                                                                 </div>
                                                                 <div id="description{{i}}" class="app-mt-1">
-                                                                        {{book.description}}
+                                                                        <span class="mat-body-strong mat-body-2">
+                                                                                  Description -
+                                                                        </span>
+                                                                        <span class="mat-small mat-caption app-text-wrap">
+                                                                                {{book.description}}
+                                                                        </span>
                                                                 </div>
                                                                 <mat-action-row class="app-mt-1">
-                                                                        <button mat-raised-button color="warn" 
-                                                                                [disabled]="deletionInProgress" 
-                                                                                (click)="onDelete(book._id)">
+                                                                        <button mat-raised-button color="warn" [disabled]="deletionInProgress" (click)="onDelete(book._id)">
                                                                                 DELETE <i *ngIf="deletionInProgress" class="fa fa-spinner fa-spin"></i>
                                                                         </button>
                                                                 </mat-action-row>
@@ -45,8 +53,7 @@
 </div>
 
 <div class="app-mt-1">
-        <mat-paginator [length]="count" *ngIf="count > 0" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
-                (page)="onPageChange($event)">
+        <mat-paginator [length]="count" *ngIf="count > 0" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)">
         </mat-paginator>
 </div>
 

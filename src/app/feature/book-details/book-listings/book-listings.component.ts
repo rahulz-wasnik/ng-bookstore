@@ -65,7 +65,8 @@ export class BookListingsComponent implements OnInit, OnDestroy {
     ).subscribe(
       response => {
         this.count = response;
-        if (response >= this.pageSize && this.books.length < this.pageSize) {
+        if ((response >= this.pageSize && this.books.length < this.pageSize) || 
+            (response === 1 && this.books.length === 0)) {
           this.pageIndex = this.pageIndex > 0 ? --this.pageIndex : this.pageIndex;
           this.store.dispatch(new fromBookStore.LoadBook(this.pageSize, this.pageIndex));
         }
