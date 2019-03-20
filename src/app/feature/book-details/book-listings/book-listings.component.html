@@ -1,11 +1,16 @@
-<!-- <mat-spinner *ngIf="operationInProgress"></mat-spinner> -->
+<div *ngIf="operationInProgress && !deletionInProgress">
+        <app-progress-spinner></app-progress-spinner>
+</div>
 
 <div *ngIf="(!operationInProgress && !error); else errorBlock">
         <mat-card>
-                <mat-card-title>{{count}}</mat-card-title>
+                <mat-card-title *ngIf="count > 0;">
+                        Books :-
+                        <span class="mat-body mat-body-1">Total number of books: {{count}}</span>
+                </mat-card-title>
                 <mat-card-content>
                         <div>
-                                <div *ngIf="books && books.length > 0; else noBooks">
+                                <div *ngIf="count > 0; else noBooks">
                                         <div class="app-mt-1" *ngFor="let book of books; let i = index;">
                                                 <mat-accordion>
                                                         <mat-expansion-panel>
@@ -20,6 +25,13 @@
                                                                 <div id="description{{i}}" class="app-mt-1">
                                                                         {{book.description}}
                                                                 </div>
+                                                                <mat-action-row class="app-mt-1">
+                                                                        <button mat-raised-button color="warn" 
+                                                                                [disabled]="deletionInProgress" 
+                                                                                (click)="onDelete(book._id)">
+                                                                                DELETE <i *ngIf="deletionInProgress" class="fa fa-spinner fa-spin"></i>
+                                                                        </button>
+                                                                </mat-action-row>
                                                         </mat-expansion-panel>
                                                 </mat-accordion>
                                         </div>
@@ -30,12 +42,12 @@
                         </div>
                 </mat-card-content>
         </mat-card>
+</div>
 
-        <div class="app-mt-1">
-                <mat-paginator [length]="count" *ngIf="books && books.length > 0" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
-                        (page)="onPageChange($event)">
-                </mat-paginator>
-        </div>
+<div class="app-mt-1">
+        <mat-paginator [length]="count" *ngIf="count > 0" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                (page)="onPageChange($event)">
+        </mat-paginator>
 </div>
 
 <ng-template #errorBlock>

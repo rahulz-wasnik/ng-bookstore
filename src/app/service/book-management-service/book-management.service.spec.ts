@@ -31,7 +31,7 @@ describe('BookManagementService', () => {
 
   it('should issue a add book request', async() =>{
     const book: Book = {
-      id: '1',
+      _id: '1',
       title:  'Title',
       category:  'category',
       description:  'description'
@@ -49,14 +49,14 @@ describe('BookManagementService', () => {
 
   it('should add a book and return the Observable<Book> with a unique id', async () => {
     const book: Book = {
-      id: '',
+      _id: '',
       title:  'Title',
       category:  'Category',
       description:  'Description'
     }
     service.add(book)
       .subscribe(response => {
-        expect(response.id).toBe('1');
+        expect(response._id).toBe('1');
       });
 
     const req = httpTestingController.expectOne((req: HttpRequest<any>) => {

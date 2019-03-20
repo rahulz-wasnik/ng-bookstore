@@ -24,3 +24,13 @@ export const getCount = createSelector(
     getBookFeatureState,
     state => state.count
 );
+
+export const getActionStatus = createSelector(
+    getBookFeatureState,
+    state => state.actionStatus
+);
+
+export const getOptions = createSelector(
+    getBookFeatureState,
+    state => state.options
+);

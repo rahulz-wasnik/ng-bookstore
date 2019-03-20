@@ -117,7 +117,7 @@ describe('AddBookComponent', () => {
     component.appForm.get('category').setValue('category');
     component.appForm.get('description').setValue('description');
     const book: Book = {
-      id: '',
+      _id: '',
       title:  component.appForm.get('title').value,
       category:  component.appForm.get('category').value,
       description:  component.appForm.get('description').value

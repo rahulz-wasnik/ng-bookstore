@@ -50,13 +50,13 @@ describe('BookListingsComponent', () => {
   it('should get the books to be displayed', fakeAsync(() => {
     const books: Book[] = [
       {
-        id: '1',
+        _id: '1',
         title: 'Title 1',
         category: 'Category 1',
         description: 'Description 1'
       },
       {
-        id: '2',
+        _id: '2',
         title: 'Title 2',
         category: 'Category 2',
         description: 'Description 2'
@@ -150,13 +150,13 @@ describe('BookListingsComponent', () => {
   it('should display the books to the user', () => {
     const books: Book[] = [
       {
-        id: '1',
+        _id: '1',
         title: 'Title 1',
         category: 'Category 1',
         description: 'Description 1'
       },
       {
-        id: '2',
+        _id: '2',
         title: 'Title 2',
         category: 'Category 2',
         description: 'Description 2'
@@ -182,13 +182,13 @@ describe('BookListingsComponent', () => {
     component.pageIndex = 0;
     component.books = [
       {
-        id: '1',
+        _id: '1',
         title: 'Title 1',
         category: 'Category 1',
         description: 'Description 1'
       },
       {
-        id: '2',
+        _id: '2',
         title: 'Title 2',
         category: 'Category 2',
         description: 'Description 2'
