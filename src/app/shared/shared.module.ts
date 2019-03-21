@@ -12,9 +12,11 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import { ConfirmDailogueComponent } from './component/confirm-dailogue/confirm-dailogue.component';
 import { AlertDailogueComponent } from './component/alert-dailogue/alert-dailogue.component';
+import { ProgressSpinnerComponent } from './component/progress-spinner/progress-spinner.component';
 
 
 @NgModule({
@@ -30,7 +32,8 @@ import { AlertDailogueComponent } from './component/alert-dailogue/alert-dailogu
     MatDialogModule,
     MatSnackBarModule,
     MatExpansionModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatProgressSpinnerModule
   ],
   exports: [
     MatToolbarModule,
@@ -43,14 +46,17 @@ import { AlertDailogueComponent } from './component/alert-dailogue/alert-dailogu
     MatDialogModule,
     MatSnackBarModule,
     MatExpansionModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+    ProgressSpinnerComponent
   ],
   entryComponents:[
     AlertDailogueComponent
   ],
   declarations: [
     ConfirmDailogueComponent,
-    AlertDailogueComponent
+    AlertDailogueComponent,
+    ProgressSpinnerComponent
   ]
 })
 export class SharedModule { }

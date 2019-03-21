@@ -1,26 +1,35 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, shareReplay } from 'rxjs/operators';
 
 import { HttpClient } from '@angular/common/http';
-import { LoadBookResponse } from './../../model/load-books-response';
+
 import { environment } from './../../../environments/environment';
 import { ErrorHandlerService } from './../error-handler/error-handler.service';
+import { Book } from './../../model/book';
+import { Options } from './../../model/options';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoaderService {
 
-  constructor(private http: HttpClient,
-    private errorHandlerService: ErrorHandlerService) { }
+  constructor(private http: HttpClient) { }
 
-  loadCategories() {
-    
+  options$ = this.http.get<Options[]>(environment.api + 'book/options').pipe(
+    shareReplay(1)
+  );
+
+  getOptions(): Observable<Options[]> {
+    return this.options$;
   }
 
-  loadBooks(pageSize: number, pageIndex: number): Observable<LoadBookResponse> {
+  getTotalNumberOfBooks(): Observable<number> {
+    return this.http.get<number>(environment.api + 'book/count');
+  }
+
+  loadBooks(pageSize: number, pageIndex: number): Observable<Book[]> {
     const queryParams = `?pageSize=${pageSize}&pageIndex=${pageIndex + 1}`;
-    return this.http.get<LoadBookResponse>(environment.api + 'book' + queryParams);
+    return this.http.get<Book[]>(environment.api + 'book' + queryParams);
   }
 }

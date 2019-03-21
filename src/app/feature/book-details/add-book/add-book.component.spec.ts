@@ -1,5 +1,5 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from "@angular/core";
 import { Observable, of } from 'rxjs';
 import { By } from '@angular/platform-browser';
@@ -14,6 +14,7 @@ import { AppService } from './../../../service/app-service/app.service';
 import { Store } from '@ngrx/store';
 import { MockStore } from './../../../store/mock.store';
 import * as fromBookStore from '../store';
+import { AppConstant } from './../../../shared/constant/app.constant';
 import { Book } from './../../../model/book';
 
 
@@ -26,7 +27,9 @@ class MockMatDailog {
 }
 
 class MockMatSnackBar {
+  open(message: string, action: string) {
 
+  }
 }
 
 describe('AddBookComponent', () => {
@@ -35,6 +38,7 @@ describe('AddBookComponent', () => {
   let store: MockStore<fromBookStore.BookState>;
   let appService: AppService;
   let matDialog: MockMatDailog;
+  let snackBar: MatSnackBar;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -60,12 +64,19 @@ describe('AddBookComponent', () => {
     store = TestBed.get(Store);
     appService = TestBed.get(AppService);
     matDialog = TestBed.get(MatDialog);
+    snackBar = TestBed.get(MatSnackBar);
     fixture.detectChanges();
   }));
 
   it('should create', () => {
     expect(component).toBeTruthy();
     store.setState(fromBookStore.initialState);
+  });
+
+  it('should dispatch a GetOptions action', () => {
+    spyOn(store, 'dispatch').and.callThrough();
+    component.ngOnInit();
+    expect(store.dispatch).toHaveBeenCalledWith(new fromBookStore.GetOptions());
   });
 
   it('should contain a form with three controls', () => {
@@ -117,7 +128,7 @@ describe('AddBookComponent', () => {
     component.appForm.get('category').setValue('category');
     component.appForm.get('description').setValue('description');
     const book: Book = {
-      id: '',
+      _id: '',
       title:  component.appForm.get('title').value,
       category:  component.appForm.get('category').value,
       description:  component.appForm.get('description').value
@@ -126,8 +137,23 @@ describe('AddBookComponent', () => {
     spyOn(store, 'dispatch').and.callThrough();
     component.onAdd();
     expect(matDialog.open).toHaveBeenCalled();
+    expect(component.additionInProgress).toBeTruthy();
     expect(store.dispatch).toHaveBeenCalledWith(
       new fromBookStore.AddBook(book));
+  });
+
+  it('should open a snackbar with a confirmation message', () => {
+    component.appForm.get('title').setValue('Title');
+    component.appForm.get('category').setValue('category');
+    component.appForm.get('description').setValue('description');
+    fixture.detectChanges();
+    spyOn(snackBar, 'open').and.callThrough();
+    component.onBookAdded();
+    expect(snackBar.open).toHaveBeenCalled();
+    expect(component.additionInProgress).toBeFalsy();
+    expect(component.appForm.get('title').value).toBe(null);
+    expect(component.appForm.get('category').value).toBe(null);
+    expect(component.appForm.get('category').value).toBe(null);
   });
 
   it('should display a title field when the page is loaded', () => {
@@ -162,7 +188,7 @@ describe('AddBookComponent', () => {
 
   it('should call the onAdd event when the Add button is clicked', async(() => {
     spyOn(component, 'onAdd');
-  
+    
     let button = fixture.debugElement.nativeElement.querySelector('button');
     button.click();
   
@@ -179,5 +205,11 @@ describe('AddBookComponent', () => {
       expect(fixture.debugElement.query(By.css('.mat-error')).nativeElement.textContent).toContain('Error occured while adding the book');
     });
   }));
+
+  it('should display progress spinner when options are loading', () => {
+    component.operationInProgress = true;
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css('app-progress-spinner')).nativeElement).toBeTruthy();
+  });
   
 });
