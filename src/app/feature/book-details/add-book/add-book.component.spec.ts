@@ -73,11 +73,47 @@ describe('AddBookComponent', () => {
     store.setState(fromBookStore.initialState);
   });
 
-  it('should dispatch a GetOptions action', () => {
-    spyOn(store, 'dispatch').and.callThrough();
+  it('should initialize to capture events from the store', () => {
+    spyOn(component, 'getOptionsFromStore').and.callThrough();
+    spyOn(component, 'getErrorFromStore').and.callThrough();
+    spyOn(component, 'getActionStatusFromStore').and.callThrough();
     component.ngOnInit();
-    expect(store.dispatch).toHaveBeenCalledWith(new fromBookStore.GetOptions());
+    expect(component.getOptionsFromStore).toHaveBeenCalled();
+    expect(component.getErrorFromStore).toHaveBeenCalled();
+    expect(component.getActionStatusFromStore).toHaveBeenCalled();
   });
+
+  it('should get the options from store', fakeAsync(() => {
+    const mockData = [
+      {
+        label: 'History',
+        value: 'ca_1'
+      }
+    ]
+    spyOn(store, 'pipe').and.returnValue(of(mockData));
+    component.getOptionsFromStore();
+    expect(store.pipe).toHaveBeenCalled();
+    expect(component.options).toBe(mockData);
+    tick(100);
+  }));
+
+  it('should get the error from store', fakeAsync(() => {
+    spyOn(store, 'pipe').and.returnValue(of('An error has occured'));
+    component.getErrorFromStore();
+    expect(store.pipe).toHaveBeenCalled();
+    expect(component.error).toBe('An error has occured');
+    tick(100);
+  }));
+
+  it(`should get actionStatus value from store and call 
+    the onBookDeleted method if the book was deleted suceesfull`, fakeAsync(() => {
+    spyOn(store, 'pipe').and.returnValue(of(1));
+    spyOn(component, 'onBookAdded').and.returnValue(of(1));
+    component.getActionStatusFromStore();
+    expect(store.pipe).toHaveBeenCalled();
+    expect(component.onBookAdded).toHaveBeenCalled();
+    tick(100);
+  }));
 
   it('should contain a form with three controls', () => {
     expect(component.appForm.get('title')).toBeTruthy();
@@ -188,10 +224,8 @@ describe('AddBookComponent', () => {
 
   it('should call the onAdd event when the Add button is clicked', async(() => {
     spyOn(component, 'onAdd');
-    
     let button = fixture.debugElement.nativeElement.querySelector('button');
     button.click();
-  
     fixture.whenStable().then(() => {
       expect(component.onAdd).toHaveBeenCalled();
     });

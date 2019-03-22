@@ -25,9 +25,9 @@ describe('ErrorHandlerService', () => {
       status: 500
     });
     service.handleError(error).subscribe(
-      (response) => {
-        expect(response.error).toBe('Error');
-      }
+      (error => {
+        expect(error.error).toBe('Error');
+      })
     )
   });
 });

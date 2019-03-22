@@ -5,6 +5,10 @@ const router = express.Router();
 const Book = require('../model/book');
 const Option = require('../model/options');
 
+router.get('/test', (req, res, next) => {
+    res.status(200).json(1);
+});
+
 router.post('/add', (req, res, next) => {
     const book = new Book({
         title: req.body.title,

@@ -11,15 +11,13 @@ export function reducer(state = fromBookStore.initialState,
 
             return {
                 ...state,
-                error: null,
-                operationInProgress: true
+                error: null
             }
 
         case fromBookStore.BookActionTypes.GetOptionsSuccess:
 
             return {
                 ...state,
-                operationInProgress: false,
                 options: action.payload
             }
 
@@ -27,7 +25,6 @@ export function reducer(state = fromBookStore.initialState,
 
             return {
                 ...state,
-                operationInProgress: false,
                 error: action.payload,
             }
 
@@ -40,10 +37,10 @@ export function reducer(state = fromBookStore.initialState,
             }
 
         case fromBookStore.BookActionTypes.GetTotalNumberOfBooksSuccess:
-
+            const status = action.payload > 0 && state.books.length === 0 ? true : false; 
             return {
                 ...state,
-                operationInProgress: false,
+                operationInProgress: status,
                 count: action.payload
             }
 

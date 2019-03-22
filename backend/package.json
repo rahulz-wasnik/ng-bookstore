@@ -1,7 +1,8 @@
 {
   "name": "ng-bookstore",
   "scripts": {
-    "start:server": "nodemon server.js"
+    "start:server": "nodemon server.js",
+    "start:test": "mocha test/ --recursive --exit"
   },
   "version": "1.0.0",
   "private": true,
@@ -16,6 +17,15 @@
     "mongoose-unique-validator": "^2.0.2"
   },
   "devDependencies": {
-    "nodemon": "^1.18.10"
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "chai-http": "^4.2.1",
+    "mocha": "^6.0.2",
+    "mockgoose": "^8.0.1",
+    "node-mocks-http": "^1.7.3",
+    "nodemon": "^1.18.10",
+    "sinon": "^7.3.0",
+    "sinon-mongoose": "^2.2.1",
+    "supertest": "^4.0.2"
   }
 }

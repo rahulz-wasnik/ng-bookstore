@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { PageEvent } from '@angular/material'
@@ -48,7 +48,6 @@ export class BookListingsComponent implements OnInit, OnDestroy {
   }
 
   getOptionsFromStore(): void {
-    this.store.dispatch(new fromBookStore.GetOptions());
     this.store.pipe(select(fromBookStore.getOptions)).pipe(
       takeWhile(() => this.componentActive)
     ).subscribe(response => this.options = response);
@@ -119,7 +118,6 @@ export class BookListingsComponent implements OnInit, OnDestroy {
         this.deletionInProgress = true;
         this.store.dispatch(new fromBookStore.DeleteBook(_id));
       }
-
     });
   }
 
