@@ -93,6 +93,7 @@ export class DeleteBookSuccess implements Action {
 
 export class DeleteBookFail implements Action {
     readonly type = BookActionTypes.DeleteBookFail
+    constructor(public payload: string) {}
 }
 
 export class Reset implements Action {

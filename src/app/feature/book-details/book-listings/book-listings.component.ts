@@ -122,17 +122,12 @@ export class BookListingsComponent implements OnInit, OnDestroy {
   }
 
   onBookDeleted(response: number) {
-    let message = '';
     if (response == 1) {
-      message = AppConstant.bookDeleteSuccess;
       this.store.dispatch(new fromBookStore.GetTotalNumberOfBooks(false));
+      this.snackBar.open(AppConstant.bookDeleteSuccess, '', {
+        duration: 2000,
+      });
     }
-    else if (response == -1) {
-      message = BookError.deleteBookFail;
-    }
-    this.snackBar.open(message, '', {
-      duration: 2000,
-    });
   }
 
   getOptionLabel(value: string): string {
