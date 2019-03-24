@@ -76,6 +76,7 @@ export class AddBookComponent implements OnInit, OnDestroy {
       takeWhile(() => this.componentActive)
     ).subscribe(
       response => {
+        this.additionInProgress = false;
         if(response === 1) {
           this.onBookAdded();
         }

@@ -7,6 +7,7 @@ const db = require('./connection');
 
   db.connect().then(() => {
       app.listen(PORT, ()=> {
+        console.log('Connected to the db');
         console.log('Listening on port - ', PORT);
       });
-  });
+  }).catch(error => console.log('Error in connecting to the db', error));
