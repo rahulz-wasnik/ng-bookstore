@@ -11,15 +11,13 @@ export function reducer(state = fromBookStore.initialState,
 
             return {
                 ...state,
-                error: null,
-                operationInProgress: true
+                error: null
             }
 
         case fromBookStore.BookActionTypes.GetOptionsSuccess:
 
             return {
                 ...state,
-                operationInProgress: false,
                 options: action.payload
             }
 
@@ -27,7 +25,7 @@ export function reducer(state = fromBookStore.initialState,
 
             return {
                 ...state,
-                operationInProgress: false,
+                options: [],
                 error: action.payload,
             }
 
@@ -40,10 +38,10 @@ export function reducer(state = fromBookStore.initialState,
             }
 
         case fromBookStore.BookActionTypes.GetTotalNumberOfBooksSuccess:
-
+            const status = action.payload > 0 && state.books.length === 0 ? true : false; 
             return {
                 ...state,
-                operationInProgress: false,
+                operationInProgress: status,
                 count: action.payload
             }
 
@@ -71,14 +69,14 @@ export function reducer(state = fromBookStore.initialState,
             return {
                 ...state,
                 books: action.payload,
-                operationInProgress: false,
+                operationInProgress: false
             }
 
         case fromBookStore.BookActionTypes.LoadBookFail:
 
             return {
                 ...state,
-                books: null,
+                books: [],
                 error: action.payload,
                 operationInProgress: false,
             }
@@ -110,6 +108,7 @@ export function reducer(state = fromBookStore.initialState,
 
             return {
                 ...state,
+                error: null,
                 actionStatus: 0
             }
 
@@ -125,6 +124,7 @@ export function reducer(state = fromBookStore.initialState,
 
             return {
                 ...state,
+                error: action.payload,
                 actionStatus: -1
             }
 
@@ -133,6 +133,8 @@ export function reducer(state = fromBookStore.initialState,
             return {
                 ...state,
                 error: null,
+                count: 0,
+                books: [],
                 actionStatus: 0,
             }
 

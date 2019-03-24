@@ -45,7 +45,7 @@ describe('BookManagementService', () => {
       return req.method === 'POST'
     }, '');
 
-    expect(req.request.url).toBe(environment.api+'book/add');
+    expect(req.request.url).toContain('book/add');
 
     req.flush({
       _id: '1',
@@ -63,7 +63,7 @@ describe('BookManagementService', () => {
       return req.method === 'DELETE'
     }, '');
 
-    expect(req.request.url).toContain(environment.api+'book/delete/1');
+    expect(req.request.url).toContain('book/delete/1');
 
     req.flush({
       _id: '1'

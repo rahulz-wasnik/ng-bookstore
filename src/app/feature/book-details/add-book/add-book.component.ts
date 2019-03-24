@@ -35,35 +35,10 @@ export class AddBookComponent implements OnInit, OnDestroy {
     private store: Store<fromBookStore.State>) { }
 
   ngOnInit() {
-    this.store.dispatch(new fromBookStore.GetOptions());
-
-    this.store.pipe(select(fromBookStore.getError)).pipe(
-      takeWhile(() => this.componentActive)
-    ).subscribe(
-      response => this.error = response 
-    );
-
-    this.store.pipe(select(fromBookStore.getOperationInProgress)).pipe(
-      takeWhile(() => this.componentActive)
-    ).subscribe(
-      response => this.operationInProgress = response 
-    );
-
-    this.store.pipe(select(fromBookStore.getOptions)).pipe(
-      takeWhile(() => this.componentActive)
-    ).subscribe(
-      response => this.options = response 
-    );
-
-    this.store.pipe(select(fromBookStore.getActionStatus)).pipe(
-      takeWhile(() => this.componentActive)
-    ).subscribe(
-      response => {
-        if(response === 1) {
-          this.onBookAdded();
-        }
-      }
-    );
+    this.getErrorFromStore();
+    this.getOperationInProgressFromStore();
+    this.getOptionsFromStore();
+    this.getActionStatusFromStore();
 
     this.appForm = new FormGroup({
       title: new FormControl('', Validators.required),
@@ -74,6 +49,39 @@ export class AddBookComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.componentActive = false;
+  }
+
+  getOptionsFromStore(): void {
+    this.store.pipe(select(fromBookStore.getOptions)).pipe(
+      takeWhile(() => this.componentActive)
+    ).subscribe(response => this.options = response);
+  }
+
+  getErrorFromStore(): void {
+    this.store.pipe(select(fromBookStore.getError)).pipe(
+      takeWhile(() => this.componentActive)
+    ).subscribe(
+      response => this.error = response 
+    );
+  }
+
+  getOperationInProgressFromStore(): void {
+    this.store.pipe(select(fromBookStore.getOperationInProgress)).pipe(
+      takeWhile(() => this.componentActive)
+    ).subscribe(response => this.operationInProgress = response);
+  }
+
+  getActionStatusFromStore(): void {
+    this.store.pipe(select(fromBookStore.getActionStatus)).pipe(
+      takeWhile(() => this.componentActive)
+    ).subscribe(
+      response => {
+        this.additionInProgress = false;
+        if(response === 1) {
+          this.onBookAdded();
+        }
+      }
+    );
   }
 
   get title(): FormControl {

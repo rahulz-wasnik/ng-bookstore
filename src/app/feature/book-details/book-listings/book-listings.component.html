@@ -53,7 +53,7 @@
 </div>
 
 <div class="app-mt-1">
-        <mat-paginator [length]="count" *ngIf="count > 0" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)">
+        <mat-paginator [length]="count" *ngIf="count > 0 && !error" [pageSize]="pageSize" [pageIndex]="pageIndex" [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)">
         </mat-paginator>
 </div>
 
