@@ -25,7 +25,7 @@ import { ConfirmDailogueComponent } from './../../shared/component/confirm-dailo
     SharedModule,
     ReactiveFormsModule,
     StoreModule.forFeature('book', reducer),
-    EffectsModule.forFeature([BookEffect])    
+    EffectsModule.forFeature([BookEffect])
   ],
   entryComponents: [
     ConfirmDailogueComponent

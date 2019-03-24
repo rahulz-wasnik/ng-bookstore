@@ -2,7 +2,7 @@ import * as frombookStore from './book.state';
 import * as fromRootStoreState from './../../../store';
 
 export interface State extends fromRootStoreState.State {
-    book: frombookStore.BookState
+    book: frombookStore.BookState;
 }
 
 export * from './book.selector';

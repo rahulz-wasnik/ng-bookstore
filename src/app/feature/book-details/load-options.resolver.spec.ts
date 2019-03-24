@@ -16,7 +16,6 @@ import { LoadOptionResolver } from './load-options.resolver';
 
 
 describe('BookDetailsPageComponent', () => {
-  let fixture: ComponentFixture<BookDetailsPageComponent>;
   let resolver: LoadOptionResolver;
   let store: MockStore<fromBookStore.BookState>;
 
@@ -51,7 +50,7 @@ describe('BookDetailsPageComponent', () => {
   });
 
   it('should fetch options from the store', () => {
-    spyOn(store, 'pipe').and.callThrough()
+    spyOn(store, 'pipe').and.callThrough();
     resolver.waitForDataToLoad();
     expect(store.pipe).toHaveBeenCalled();
   });

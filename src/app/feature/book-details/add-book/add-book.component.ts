@@ -23,15 +23,15 @@ import { BookError } from './../../../shared/constant/error.constant';
 })
 export class AddBookComponent implements OnInit, OnDestroy {
 
-  componentActive: boolean = true;
+  componentActive = true;
   appForm: FormGroup;
-  error: string;  
-  operationInProgress: boolean;
+  error: string;
+  operationInProgress;
   options: Options[];
-  additionInProgress: boolean = false;
+  additionInProgress = false;
 
-  constructor(private appService: AppService, 
-    private dialog: MatDialog, 
+  constructor(private appService: AppService,
+    private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private store: Store<fromBookStore.State>) { }
 
@@ -55,7 +55,7 @@ export class AddBookComponent implements OnInit, OnDestroy {
     this.store.pipe(select(fromBookStore.getError)).pipe(
       takeWhile(() => this.componentActive)
     ).subscribe(
-      response => this.error = response 
+      response => this.error = response
     );
   }
 
@@ -70,7 +70,7 @@ export class AddBookComponent implements OnInit, OnDestroy {
       takeWhile(() => this.componentActive)
     ).subscribe(
       response => {
-        if(response !== 0) {
+        if (response !== 0) {
           this.onBookAdded(response);
         }
       }
@@ -90,39 +90,39 @@ export class AddBookComponent implements OnInit, OnDestroy {
   }
 
   onAdd(): void {
-    if(this.appForm.valid) {
+    if (this.appForm.valid) {
       const dialogRef = this.dialog.open(ConfirmDailogueComponent, {
         width: '250px',
         disableClose: true
       });
-      
+
       dialogRef.afterClosed().subscribe(result => {
-        if(result) {
+        if (result) {
           this.additionInProgress = true;
           const book: Book = {
             _id: '',
             title: this.title.value,
             category: this.category.value,
             description: this.description.value
-          }
+          };
           this.store.dispatch(new fromBookStore.AddBook(book));
         }
-      }); 
+      });
     } else {
       this.appService.touchControls(this.appForm);
       this.dialog.open(AlertDailogueComponent, {
         width: '250px',
         disableClose: true
       });
-    }   
+    }
   }
 
   onBookAdded(value: number) {
     let message = '';
-    if (value == 1) {
-      this.appForm.reset();  
+    if (value === 1) {
+      this.appForm.reset();
       message = AppConstant.bookAddSuccess;
-    } else if(value === -1) {
+    } else if (value === -1) {
       message = BookError.addBookFail;
     }
     this.additionInProgress = false;

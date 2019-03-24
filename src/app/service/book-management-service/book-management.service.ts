@@ -14,12 +14,12 @@ export class BookManagementService {
   add(book: Book): Observable<Book> {
     return this.http.post<Book>(environment.api + 'book/add', JSON.stringify(book), {
       headers: {
-        'Content-Type': "application/json"
+        'Content-Type': 'application/json'
       }
-    })
+    });
   }
 
   delete(_id: string): Observable<string> {
-    return this.http.delete<string>(environment.api + 'book/delete/' + _id)
+    return this.http.delete<string>(environment.api + 'book/delete/' + _id);
   }
 }

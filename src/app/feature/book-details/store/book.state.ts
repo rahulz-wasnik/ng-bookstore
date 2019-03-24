@@ -3,7 +3,7 @@ import { Book } from './../../../model/book';
 import { Options } from './../../../model/options';
 
 export interface BookState {
-    options: Options[],
+    options: Options[];
     books: Book[];
     error: string;
     operationInProgress: boolean;
@@ -18,4 +18,4 @@ export const initialState: BookState = {
     operationInProgress: false,
     count: 0,
     actionStatus: 0,
-}
+};

@@ -1,22 +1,17 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute  } from '@angular/router';
-import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
-import { PageEvent } from '@angular/material'
+import { PageEvent } from '@angular/material';
 import { takeWhile } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material';
 
 import { Book } from './../../../model/book';
 import * as fromBookStore from '../store';
-import { getBooks, getOperationInProgress, getActionStatus } from './../store/book.selector';
 import { ConfirmDailogueComponent } from './../../../shared/component/confirm-dailogue/confirm-dailogue.component';
 import { BookError } from './../../../shared/constant/error.constant';
 import { AppConstant } from './../../../shared/constant/app.constant';
 import { Options } from './../../../model/options';
-import { element } from 'protractor';
 import { AppService } from './../../../service/app-service/app.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-book-listings',
@@ -25,22 +20,21 @@ import { Router } from '@angular/router';
 })
 export class BookListingsComponent implements OnInit, OnDestroy {
 
-  books: Book[]
-  operationInProgress: boolean = false;
-  pageSize: number = 2
+  books: Book[];
+  operationInProgress = false;
+  pageSize = 2;
   pageSizeOptions = [2, 5, 10];
-  pageIndex: number = 0
+  pageIndex = 0;
   count: number;
   error: string;
-  deletionInProgress: boolean = false;
-  componentActive: boolean = true;
-  firstLoad: boolean = true;
+  deletionInProgress = false;
+  componentActive = true;
   options: Options[];
 
   constructor(private store: Store<fromBookStore.State>,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private appService: AppService) {}
+    private appService: AppService) { }
 
   ngOnInit() {
     this.options = this.appService.getOptions();
@@ -62,8 +56,8 @@ export class BookListingsComponent implements OnInit, OnDestroy {
     ).subscribe(
       response => {
         this.count = response;
-        if ((response >= this.pageSize && this.books.length < this.pageSize) || 
-            (response === 1 && this.books.length === 0)) {
+        if ((response >= this.pageSize && this.books.length < this.pageSize) ||
+          (response === 1 && this.books.length === 0)) {
           this.pageIndex = this.pageIndex > 0 ? --this.pageIndex : this.pageIndex;
           this.store.dispatch(new fromBookStore.LoadBook(this.pageSize, this.pageIndex));
         }
@@ -73,7 +67,7 @@ export class BookListingsComponent implements OnInit, OnDestroy {
   getErrorFromStore(): void {
     this.store.pipe(select(fromBookStore.getError)).pipe(
       takeWhile(() => this.componentActive)
-    ).subscribe(response => this.error = response)
+    ).subscribe(response => this.error = response);
   }
 
   getOperationInProgressFromStore(): void {
@@ -86,7 +80,7 @@ export class BookListingsComponent implements OnInit, OnDestroy {
     this.store.pipe(select(fromBookStore.getActionStatus)).pipe(
       takeWhile(() => this.componentActive)
     ).subscribe(
-      response => {      
+      response => {
         if (response !== 0) {
           this.onBookDeleted(response);
         }
@@ -120,10 +114,10 @@ export class BookListingsComponent implements OnInit, OnDestroy {
 
   onBookDeleted(value: number) {
     let message = '';
-    if (value == 1) {
+    if (value === 1) {
       this.store.dispatch(new fromBookStore.GetTotalNumberOfBooks(false));
       message = AppConstant.bookDeleteSuccess;
-    } else if(value === -1) {
+    } else if (value === -1) {
       message = BookError.deleteBookFail;
     }
     this.deletionInProgress = false;
@@ -135,6 +129,6 @@ export class BookListingsComponent implements OnInit, OnDestroy {
   getOptionLabel(value: string): string {
     return this.options.find(element => {
       return element.value === value;
-    }).label
+    }).label;
   }
 }

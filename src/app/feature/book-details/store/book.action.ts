@@ -12,7 +12,7 @@ export enum BookActionTypes {
     GetTotalNumberOfBooksFail = '[Book] Get Total Number Of Books Fail',
     LoadBook = '[Book] Load Book',
     LoadBookSuccess = '[Book] Load Book Success',
-    LoadBookFail = '[Book] Load Book Fail',    
+    LoadBookFail = '[Book] Load Book Fail',
     AddBook = '[Book] Add Book',
     AddBookSuccess = '[Book] Add Book Success',
     AddBookFail = '[Book] Add Book Fail',
@@ -28,81 +28,81 @@ export class GetOptions implements Action {
 
 export class GetOptionsSuccess implements Action {
     readonly type = BookActionTypes.GetOptionsSuccess;
-    constructor(public payload: Options[]) {}
+    constructor(public payload: Options[]) { }
 }
 
 export class GetOptionsFail implements Action {
     readonly type = BookActionTypes.GetOptionsFail;
-    constructor(public payload: string) {}
+    constructor(public payload: string) { }
 }
 
 export class GetTotalNumberOfBooks implements Action {
     readonly type = BookActionTypes.GetTotalNumberOfBooks;
-    constructor(public payload: boolean) {}
+    constructor(public payload: boolean) { }
 }
 
 export class GetTotalNumberOfBooksSuccess implements Action {
     readonly type = BookActionTypes.GetTotalNumberOfBooksSuccess;
-    constructor(public payload: number) {}
+    constructor(public payload: number) { }
 }
 
 export class GetTotalNumberOfBooksFail implements Action {
     readonly type = BookActionTypes.GetTotalNumberOfBooksFail;
-    constructor(public payload: string) {}
+    constructor(public payload: string) { }
 }
 
 export class LoadBook implements Action {
     readonly type = BookActionTypes.LoadBook;
-    constructor(public pageSize: number, public pageIndex: number) {}
+    constructor(public pageSize: number, public pageIndex: number) { }
 }
 
 export class LoadBookSuccess implements Action {
     readonly type = BookActionTypes.LoadBookSuccess;
-    constructor(public payload: Book[]) {}
+    constructor(public payload: Book[]) { }
 }
 
 export class LoadBookFail implements Action {
     readonly type = BookActionTypes.LoadBookFail;
-    constructor(public payload: string) {}
+    constructor(public payload: string) { }
 }
 
 export class AddBook implements Action {
     readonly type = BookActionTypes.AddBook;
-    constructor(public payload: Book) {}
+    constructor(public payload: Book) { }
 }
 
 export class AddBookSuccess implements Action {
     readonly type = BookActionTypes.AddBookSuccess;
-    constructor(public payload: Book) {}
+    constructor(public payload: Book) { }
 }
 
 export class AddBookFail implements Action {
     readonly type = BookActionTypes.AddBookFail;
-    constructor(public payload: string) {}
+    constructor(public payload: string) { }
 }
 
 export class DeleteBook implements Action {
-    readonly type = BookActionTypes.DeleteBook
-    constructor(public payload: string) {}
+    readonly type = BookActionTypes.DeleteBook;
+    constructor(public payload: string) { }
 }
 
 export class DeleteBookSuccess implements Action {
-    readonly type = BookActionTypes.DeleteBookSuccess
-    constructor(public _id: string) {}
+    readonly type = BookActionTypes.DeleteBookSuccess;
+    constructor(public _id: string) { }
 }
 
 export class DeleteBookFail implements Action {
-    readonly type = BookActionTypes.DeleteBookFail
-    constructor(public payload: string) {}
+    readonly type = BookActionTypes.DeleteBookFail;
+    constructor(public payload: string) { }
 }
 
 export class Reset implements Action {
     readonly type = BookActionTypes.Reset;
 }
 
-export type BookAction = LoadBook | LoadBookSuccess | LoadBookFail | 
-    AddBook | AddBookSuccess | AddBookFail | 
+export type BookAction = LoadBook | LoadBookSuccess | LoadBookFail |
+    AddBook | AddBookSuccess | AddBookFail |
     DeleteBook | DeleteBookSuccess | DeleteBookFail |
-    Reset | 
+    Reset |
     GetTotalNumberOfBooks | GetTotalNumberOfBooksSuccess | GetTotalNumberOfBooksFail |
-    GetOptions | GetOptionsSuccess | GetOptionsFail
+    GetOptions | GetOptionsSuccess | GetOptionsFail;

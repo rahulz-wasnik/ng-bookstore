@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Resolve,  ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
-import { Observable, of, EMPTY } from 'rxjs';
-import { take, skipWhile, catchError } from 'rxjs/operators'
+import { Resolve } from '@angular/router';
+import { Observable } from 'rxjs';
+import { take, skipWhile } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 
-import { LoaderService } from './../../service/loader-service/loader.service';
 import * as fromBookStore from './store';
-import { Options } from './../../model/options';
 
 @Injectable({
     providedIn: 'root'
@@ -17,7 +15,7 @@ export class LoadOptionResolver implements Resolve<any> {
 
     waitForDataToLoad(): Observable<any> {
         return this.store.pipe(select(fromBookStore.getOptions)).pipe(
-            skipWhile(data => data.length == 0),
+            skipWhile(data => data.length === 0),
             take(1)
         );
     }

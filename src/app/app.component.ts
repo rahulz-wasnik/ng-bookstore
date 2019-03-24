@@ -8,14 +8,14 @@ import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 })
 export class AppComponent {
 
-  navigationInProgress: boolean = false;
+  navigationInProgress = false;
 
   constructor(private router: Router) {
     router.events.subscribe(event => {
-      if(event instanceof NavigationStart) {
+      if (event instanceof NavigationStart) {
         this.navigationInProgress = true;
       }
-      if(event instanceof NavigationEnd) {
+      if (event instanceof NavigationEnd) {
         this.navigationInProgress = false;
       }
     });

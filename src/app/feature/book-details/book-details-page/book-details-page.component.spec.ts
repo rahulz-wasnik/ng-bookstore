@@ -24,20 +24,20 @@ describe('BookDetailsPageComponent', () => {
       imports: [
         RouterTestingModule.withRoutes([
           { path: RouteConstant.home, component: HomePageComponent },
-          { path: RouteConstant.book, component: BookDetailsPageComponent, resolve: {optionsData: of(2)} },
+          { path: RouteConstant.book, component: BookDetailsPageComponent, resolve: { optionsData: of(2) } },
           { path: RouteConstant.book + '/' + RouteConstant.listings, component: BookListingsComponent },
           { path: RouteConstant.book + '/' + RouteConstant.add, component: AddBookComponent },
           { path: '', redirectTo: RouteConstant.book, pathMatch: 'full' },
           { path: '**', redirectTo: RouteConstant.book, pathMatch: 'full' },
         ])
       ],
-      declarations: [ BookDetailsPageComponent, HomePageComponent, BookListingsComponent, AddBookComponent ],
+      declarations: [BookDetailsPageComponent, HomePageComponent, BookListingsComponent, AddBookComponent],
       providers: [
         AppService
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

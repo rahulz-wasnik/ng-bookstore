@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { CommonModule, Location } from '@angular/common';
-import { NO_ERRORS_SCHEMA } from "@angular/core";
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
@@ -52,17 +52,17 @@ describe('HeaderComponent', () => {
   });
 
   it('should display a link which takes the user to home page', () => {
-    expect(fixture.debugElement.queryAll(By.css('a'))[0].nativeElement.href).toContain(RouteConstant.home)
+    expect(fixture.debugElement.queryAll(By.css('a'))[0].nativeElement.href).toContain(RouteConstant.home);
   });
 
   it('should display a link which takes the user to book listing page', () => {
     expect(fixture.debugElement.queryAll(By.css('a'))[1].nativeElement.href).
-      toContain(RouteConstant.book + '/' + RouteConstant.listings)
+      toContain(RouteConstant.book + '/' + RouteConstant.listings);
   });
 
   it('should display a link which takes the user to add book page', () => {
     expect(fixture.debugElement.queryAll(By.css('a'))[2].nativeElement.href).
-      toContain(RouteConstant.book + '/' + RouteConstant.add)
+      toContain(RouteConstant.book + '/' + RouteConstant.add);
   });
 
   it('should navigate to home page when the My Book App link is clicked', async(() => {
