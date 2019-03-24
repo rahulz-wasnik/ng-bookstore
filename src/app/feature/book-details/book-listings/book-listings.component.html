@@ -1,7 +1,6 @@
 <div *ngIf="operationInProgress && !deletionInProgress">
         <app-progress-spinner></app-progress-spinner>
 </div>
-
 <div *ngIf="(!operationInProgress && !error); else errorBlock">
         <mat-card>
                 <mat-card-title *ngIf="count > 0;">

@@ -26,7 +26,7 @@ export function reducer(state = fromBookStore.initialState,
             return {
                 ...state,
                 options: [],
-                error: action.payload,
+                error: action.payload
             }
 
         case fromBookStore.BookActionTypes.GetTotalNumberOfBooks:
@@ -59,9 +59,7 @@ export function reducer(state = fromBookStore.initialState,
             return {
                 ...state,
                 error: null,
-                operationInProgress: true,
-                pageSize: action.pageSize,
-                pageIndex: action.pageIndex
+                operationInProgress: true
             }
 
         case fromBookStore.BookActionTypes.LoadBookSuccess:
@@ -100,7 +98,6 @@ export function reducer(state = fromBookStore.initialState,
 
             return {
                 ...state,
-                error: action.payload,
                 actionStatus: -1
             }
 
@@ -124,7 +121,6 @@ export function reducer(state = fromBookStore.initialState,
 
             return {
                 ...state,
-                error: action.payload,
                 actionStatus: -1
             }
 
@@ -135,7 +131,7 @@ export function reducer(state = fromBookStore.initialState,
                 error: null,
                 count: 0,
                 books: [],
-                actionStatus: 0,
+                actionStatus: 0
             }
 
         default:

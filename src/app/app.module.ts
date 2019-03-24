@@ -13,6 +13,7 @@ import { CoreModule } from './core/core.module';
 import { AppRoutingModule } from './app-routing.module';
 import { environment } from './../environments/environment';
 import { reducers } from './store/root.reducer';
+import { SharedModule } from './shared/shared.module';
 
 // Components
 import { AppComponent } from './app.component';
@@ -35,7 +36,8 @@ import { AppComponent } from './app.component';
       logOnly: environment.production
     }),
     EffectsModule.forRoot([]),
-    StoreRouterConnectingModule
+    StoreRouterConnectingModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

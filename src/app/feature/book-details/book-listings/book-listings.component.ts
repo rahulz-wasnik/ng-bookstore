@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute  } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { PageEvent } from '@angular/material'
@@ -14,6 +15,8 @@ import { BookError } from './../../../shared/constant/error.constant';
 import { AppConstant } from './../../../shared/constant/app.constant';
 import { Options } from './../../../model/options';
 import { element } from 'protractor';
+import { AppService } from './../../../service/app-service/app.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-book-listings',
@@ -24,9 +27,9 @@ export class BookListingsComponent implements OnInit, OnDestroy {
 
   books: Book[]
   operationInProgress: boolean = false;
-  pageSize: number = fromBookStore.initialState.pageSize;
+  pageSize: number = 2
   pageSizeOptions = [2, 5, 10];
-  pageIndex: number = fromBookStore.initialState.pageIndex;
+  pageIndex: number = 0
   count: number;
   error: string;
   deletionInProgress: boolean = false;
@@ -36,21 +39,16 @@ export class BookListingsComponent implements OnInit, OnDestroy {
 
   constructor(private store: Store<fromBookStore.State>,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar,
+    private appService: AppService) {}
 
   ngOnInit() {
-    this.getOptionsFromStore();
+    this.options = this.appService.getOptions();
     this.getBooksFromStore();
     this.getCountFromStore();
     this.getErrorFromStore();
     this.getOperationInProgressFromStore();
     this.getActionStatusFromStore();
-  }
-
-  getOptionsFromStore(): void {
-    this.store.pipe(select(fromBookStore.getOptions)).pipe(
-      takeWhile(() => this.componentActive)
-    ).subscribe(response => this.options = response);
   }
 
   getBooksFromStore(): void {
@@ -88,8 +86,7 @@ export class BookListingsComponent implements OnInit, OnDestroy {
     this.store.pipe(select(fromBookStore.getActionStatus)).pipe(
       takeWhile(() => this.componentActive)
     ).subscribe(
-      response => {
-        this.deletionInProgress = false;
+      response => {      
         if (response !== 0) {
           this.onBookDeleted(response);
         }
@@ -121,13 +118,18 @@ export class BookListingsComponent implements OnInit, OnDestroy {
     });
   }
 
-  onBookDeleted(response: number) {
-    if (response == 1) {
+  onBookDeleted(value: number) {
+    let message = '';
+    if (value == 1) {
       this.store.dispatch(new fromBookStore.GetTotalNumberOfBooks(false));
-      this.snackBar.open(AppConstant.bookDeleteSuccess, '', {
-        duration: 2000,
-      });
+      message = AppConstant.bookDeleteSuccess;
+    } else if(value === -1) {
+      message = BookError.deleteBookFail;
     }
+    this.deletionInProgress = false;
+    this.snackBar.open(message, '', {
+      duration: 2000,
+    });
   }
 
   getOptionLabel(value: string): string {

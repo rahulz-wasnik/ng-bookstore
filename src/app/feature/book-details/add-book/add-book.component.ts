@@ -14,6 +14,7 @@ import { Book } from './../../../model/book';
 import { Options } from './../../../model/options';
 import { AlertDailogueComponent } from './../../../shared/component/alert-dailogue/alert-dailogue.component';
 import { AppConstant } from './../../../shared/constant/app.constant';
+import { BookError } from './../../../shared/constant/error.constant';
 
 @Component({
   selector: 'app-add-book',
@@ -35,11 +36,10 @@ export class AddBookComponent implements OnInit, OnDestroy {
     private store: Store<fromBookStore.State>) { }
 
   ngOnInit() {
+    this.options = this.appService.getOptions();
     this.getErrorFromStore();
     this.getOperationInProgressFromStore();
-    this.getOptionsFromStore();
     this.getActionStatusFromStore();
-
     this.appForm = new FormGroup({
       title: new FormControl('', Validators.required),
       category: new FormControl('', Validators.required),
@@ -49,12 +49,6 @@ export class AddBookComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.componentActive = false;
-  }
-
-  getOptionsFromStore(): void {
-    this.store.pipe(select(fromBookStore.getOptions)).pipe(
-      takeWhile(() => this.componentActive)
-    ).subscribe(response => this.options = response);
   }
 
   getErrorFromStore(): void {
@@ -76,9 +70,8 @@ export class AddBookComponent implements OnInit, OnDestroy {
       takeWhile(() => this.componentActive)
     ).subscribe(
       response => {
-        this.additionInProgress = false;
-        if(response === 1) {
-          this.onBookAdded();
+        if(response !== 0) {
+          this.onBookAdded(response);
         }
       }
     );
@@ -124,10 +117,16 @@ export class AddBookComponent implements OnInit, OnDestroy {
     }   
   }
 
-  onBookAdded() {
+  onBookAdded(value: number) {
+    let message = '';
+    if (value == 1) {
+      this.appForm.reset();  
+      message = AppConstant.bookAddSuccess;
+    } else if(value === -1) {
+      message = BookError.addBookFail;
+    }
     this.additionInProgress = false;
-    this.appForm.reset();
-    this.snackBar.open(AppConstant.bookAddSuccess, '', {
+    this.snackBar.open(message, '', {
       duration: 2000,
     });
   }
