@@ -69,33 +69,17 @@ describe('BookListingsComponent', () => {
   });
 
   it('should initialize to capture events from the store', () => {
-    spyOn(component, 'getOptionsFromStore').and.callThrough();
     spyOn(component, 'getBooksFromStore').and.callThrough();
     spyOn(component, 'getCountFromStore').and.callThrough();
     spyOn(component, 'getErrorFromStore').and.callThrough();
     spyOn(component, 'getOperationInProgressFromStore').and.callThrough();
     spyOn(component, 'getActionStatusFromStore').and.callThrough();
     component.ngOnInit();
-    expect(component.getOptionsFromStore).toHaveBeenCalled();
     expect(component.getBooksFromStore).toHaveBeenCalled();
     expect(component.getCountFromStore).toHaveBeenCalled();
     expect(component.getErrorFromStore).toHaveBeenCalled();
     expect(component.getActionStatusFromStore).toHaveBeenCalled();
   });
-
-  it('should get the options from store', fakeAsync(() => {
-    const mockData = [
-      {
-        label: 'History',
-        value: 'ca_1'
-      }
-    ]
-    spyOn(store, 'pipe').and.returnValue(of(mockData));
-    component.getOptionsFromStore();
-    expect(store.pipe).toHaveBeenCalled();
-    expect(component.options).toBe(mockData);
-    tick(100);
-  }));
 
   it('should get the books from store', fakeAsync(() => {
     const mockData = [
@@ -174,7 +158,7 @@ describe('BookListingsComponent', () => {
     the onBookDeleted method if the book was deleted suceesfully`, fakeAsync(() => {
     component.deletionInProgress = true;
     spyOn(store, 'pipe').and.returnValue(of(1));
-    spyOn(component, 'onBookDeleted').and.returnValue(of(1));
+    spyOn(component, 'onBookDeleted').and.callThrough();
     component.getActionStatusFromStore();
     expect(store.pipe).toHaveBeenCalled();
     expect(component.deletionInProgress).toBeFalsy();
@@ -197,11 +181,15 @@ describe('BookListingsComponent', () => {
     expect(store.dispatch).toHaveBeenCalledWith(new fromBookStore.DeleteBook('100'));
   });
   
-  it('should dispatch GetTotalNumberOfBooks action and display a confirmation message stating Book deleted successfully', () => {
+  it(`should dispatch GetTotalNumberOfBooks action and display
+    a confirmation message stating Book deleted successfully`, () => {
+    component.deletionInProgress = true;  
     spyOn(store, 'dispatch').and.callThrough();
     spyOn(snackBar, 'open').and.callThrough();
     component.onBookDeleted(1);
     expect(snackBar.open).toHaveBeenCalled();
+    expect(store.dispatch).toHaveBeenCalledWith(new fromBookStore.GetTotalNumberOfBooks(false));
+    expect(component.deletionInProgress).toBeFalsy();
   });
 
   it('should return the label based on value', () => {

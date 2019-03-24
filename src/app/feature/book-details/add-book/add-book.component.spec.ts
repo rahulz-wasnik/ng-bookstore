@@ -74,28 +74,12 @@ describe('AddBookComponent', () => {
   });
 
   it('should initialize to capture events from the store', () => {
-    spyOn(component, 'getOptionsFromStore').and.callThrough();
     spyOn(component, 'getErrorFromStore').and.callThrough();
     spyOn(component, 'getActionStatusFromStore').and.callThrough();
     component.ngOnInit();
-    expect(component.getOptionsFromStore).toHaveBeenCalled();
     expect(component.getErrorFromStore).toHaveBeenCalled();
     expect(component.getActionStatusFromStore).toHaveBeenCalled();
   });
-
-  it('should get the options from store', fakeAsync(() => {
-    const mockData = [
-      {
-        label: 'History',
-        value: 'ca_1'
-      }
-    ]
-    spyOn(store, 'pipe').and.returnValue(of(mockData));
-    component.getOptionsFromStore();
-    expect(store.pipe).toHaveBeenCalled();
-    expect(component.options).toBe(mockData);
-    tick(100);
-  }));
 
   it('should get the error from store', fakeAsync(() => {
     spyOn(store, 'pipe').and.returnValue(of('An error has occured'));
@@ -178,18 +162,32 @@ describe('AddBookComponent', () => {
       new fromBookStore.AddBook(book));
   });
 
-  it('should open a snackbar with a confirmation message', () => {
+  it('should open a snackbar with a confirmation message and clear the form fields', () => {
     component.appForm.get('title').setValue('Title');
     component.appForm.get('category').setValue('category');
     component.appForm.get('description').setValue('description');
     fixture.detectChanges();
     spyOn(snackBar, 'open').and.callThrough();
-    component.onBookAdded();
+    component.onBookAdded(1);
     expect(snackBar.open).toHaveBeenCalled();
     expect(component.additionInProgress).toBeFalsy();
     expect(component.appForm.get('title').value).toBe(null);
     expect(component.appForm.get('category').value).toBe(null);
     expect(component.appForm.get('category').value).toBe(null);
+  });
+
+  it('should open a snackbar with a error message and not clear the form fields', () => {
+    component.appForm.get('title').setValue('Title');
+    component.appForm.get('category').setValue('category');
+    component.appForm.get('description').setValue('description');
+    fixture.detectChanges();
+    spyOn(snackBar, 'open').and.callThrough();
+    component.onBookAdded(-1);
+    expect(snackBar.open).toHaveBeenCalled();
+    expect(component.additionInProgress).toBeFalsy();
+    expect(component.appForm.get('title').value).toBe('Title');
+    expect(component.appForm.get('category').value).toBe('category');
+    expect(component.appForm.get('description').value).toBe('description');
   });
 
   it('should display a title field when the page is loaded', () => {
@@ -239,11 +237,5 @@ describe('AddBookComponent', () => {
       expect(fixture.debugElement.query(By.css('.mat-error')).nativeElement.textContent).toContain('Error occured while adding the book');
     });
   }));
-
-  it('should display progress spinner when options are loading', () => {
-    component.operationInProgress = true;
-    fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('app-progress-spinner')).nativeElement).toBeTruthy();
-  });
   
 });
