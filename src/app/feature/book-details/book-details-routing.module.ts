@@ -18,7 +18,7 @@ const routes: Routes = [
       { path: '', redirectTo: RouteConstant.listings, pathMatch: 'full' },
       { path: '**', redirectTo: RouteConstant.listings, pathMatch: 'full' }
     ],
-    resolve: {optionsData: LoadOptionResolver}
+    resolve: { optionsData: LoadOptionResolver }
   }
 ];
 

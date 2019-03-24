@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import * as fromBookStore from "../store";
 import { AppService } from './../../../service/app-service/app.service';
 
 @Component({

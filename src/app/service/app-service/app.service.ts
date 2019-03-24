@@ -19,7 +19,7 @@ export class AppService {
       form.controls[element].markAsTouched();
     });
   }
-  
+
   setOptions(data: Options[]): void {
     this.options = data;
   }

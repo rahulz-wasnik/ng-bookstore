@@ -89,7 +89,7 @@ describe('BookListingsComponent', () => {
         category: 'Category',
         description: 'Description'
       }
-    ]
+    ];
     spyOn(store, 'pipe').and.returnValue(of(mockData));
     component.getBooksFromStore();
     expect(store.pipe).toHaveBeenCalled();
@@ -105,7 +105,7 @@ describe('BookListingsComponent', () => {
         category: 'Category',
         description: 'Description'
       }
-    ]
+    ];
     component.pageSize = 2;
     component.pageIndex = 1;
     spyOn(store, 'dispatch').and.callThrough();
@@ -117,7 +117,8 @@ describe('BookListingsComponent', () => {
     tick(100);
   }));
 
-  it('should dispatch a load book action when the total number of books is greater that 0 and there are no books being displayed on the page', fakeAsync(() => {
+  it(`should dispatch a load book action when the total number of books is
+    greater that 0 and there are no books being displayed on the page`, fakeAsync(() => {
     component.books = [
       {
         _id: '100',
@@ -125,7 +126,7 @@ describe('BookListingsComponent', () => {
         category: 'Category',
         description: 'Description'
       }
-    ]
+    ];
     component.pageSize = 2;
     component.pageIndex = 1;
     spyOn(store, 'dispatch').and.callThrough();
@@ -154,7 +155,7 @@ describe('BookListingsComponent', () => {
     tick(100);
   }));
 
-  it(`should get actionStatus value from store and call 
+  it(`should get actionStatus value from store and call
     the onBookDeleted method if the book was deleted suceesfully`, fakeAsync(() => {
     component.deletionInProgress = true;
     spyOn(store, 'pipe').and.returnValue(of(1));
@@ -171,26 +172,26 @@ describe('BookListingsComponent', () => {
     component.ngOnDestroy();
     expect(component.componentActive).toBeFalsy();
   });
-  
-  it(`should display an alert when the user clicks the delete button 
+
+  it(`should display an alert when the user clicks the delete button
       and dispatch a DeleteBook action when the user confirms`, () => {
-    spyOn(matDialog, 'open').and.callThrough();
-    spyOn(store, 'dispatch').and.callThrough();
-    component.onDelete('100');
-    expect(matDialog.open).toHaveBeenCalled();
-    expect(store.dispatch).toHaveBeenCalledWith(new fromBookStore.DeleteBook('100'));
-  });
-  
+      spyOn(matDialog, 'open').and.callThrough();
+      spyOn(store, 'dispatch').and.callThrough();
+      component.onDelete('100');
+      expect(matDialog.open).toHaveBeenCalled();
+      expect(store.dispatch).toHaveBeenCalledWith(new fromBookStore.DeleteBook('100'));
+    });
+
   it(`should dispatch GetTotalNumberOfBooks action and display
     a confirmation message stating Book deleted successfully`, () => {
-    component.deletionInProgress = true;  
-    spyOn(store, 'dispatch').and.callThrough();
-    spyOn(snackBar, 'open').and.callThrough();
-    component.onBookDeleted(1);
-    expect(snackBar.open).toHaveBeenCalled();
-    expect(store.dispatch).toHaveBeenCalledWith(new fromBookStore.GetTotalNumberOfBooks(false));
-    expect(component.deletionInProgress).toBeFalsy();
-  });
+      component.deletionInProgress = true;
+      spyOn(store, 'dispatch').and.callThrough();
+      spyOn(snackBar, 'open').and.callThrough();
+      component.onBookDeleted(1);
+      expect(snackBar.open).toHaveBeenCalled();
+      expect(store.dispatch).toHaveBeenCalledWith(new fromBookStore.GetTotalNumberOfBooks(false));
+      expect(component.deletionInProgress).toBeFalsy();
+    });
 
   it('should return the label based on value', () => {
     component.options = [
@@ -198,11 +199,11 @@ describe('BookListingsComponent', () => {
         label: 'History',
         value: 'ca_1'
       }
-    ]
+    ];
     const label = component.getOptionLabel('ca_1');
     expect(label).toBe('History');
   });
-  
+
   it('should trigger a LoadBook action when the pageChange event is called', () => {
     const event: PageEvent = new PageEvent();
     event.pageIndex = 1;
@@ -251,7 +252,7 @@ describe('BookListingsComponent', () => {
         category: 'Category 2',
         description: 'Description 2'
       }
-    ]
+    ];
     component.operationInProgress = false;
     component.error = null;
     component.count = 2;
@@ -281,8 +282,8 @@ describe('BookListingsComponent', () => {
         description: 'Description 2'
       }
     ];
-    component.count = 2;    
-    component.pageSizeOptions = [1,3,5];
+    component.count = 2;
+    component.pageSizeOptions = [1, 3, 5];
     spyOn(component, 'getOptionLabel').and.returnValue('Category 1');
     spyOn(component, 'onDelete').and.callThrough();
     fixture.detectChanges();
@@ -309,8 +310,8 @@ describe('BookListingsComponent', () => {
         description: 'Description 2'
       }
     ];
-    component.count = 2;    
-    component.pageSizeOptions = [1,3,5];
+    component.count = 2;
+    component.pageSizeOptions = [1, 3, 5];
     spyOn(component, 'getOptionLabel').and.returnValue('Category 1');
     spyOn(component, 'onPageChange').and.callThrough();
     fixture.detectChanges();

@@ -4,4 +4,4 @@ export const RouteConstant = {
     book: 'book',
     add: 'add',
     listings: 'listings'
-}
+};

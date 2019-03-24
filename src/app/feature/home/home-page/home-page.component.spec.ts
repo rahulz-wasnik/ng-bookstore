@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { CommonModule, Location } from '@angular/common';
-import { NO_ERRORS_SCHEMA } from "@angular/core";
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { HomePageComponent } from './home-page.component';
 import { RouteConstant } from './../../../shared/constant/route.constant';
@@ -43,11 +43,11 @@ describe('HomePageComponent', () => {
 
   it('should display a welcome message', () => {
     expect(fixture.debugElement.nativeElement.querySelector('#homeContent').innerText).
-      toContain('Welcome to a book app...Start by viewing our collection')
+      toContain('Welcome to a book app...Start by viewing our collection');
   });
 
   it('should display a button which takes the user to book listing page', () => {
-    expect(fixture.debugElement.nativeElement.querySelector('a').href).toContain(RouteConstant.book + '/' + RouteConstant.listings)
+    expect(fixture.debugElement.nativeElement.querySelector('a').href).toContain(RouteConstant.book + '/' + RouteConstant.listings);
   });
 
   it('should navigate to book listing page when the View all the books button is clicked', async(() => {

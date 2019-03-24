@@ -26,21 +26,23 @@ describe('LoaderService', () => {
     httpTestingController.verify();
   });
 
+  // tslint:disable-next-line: no-shadowed-variable
   it('should be created', inject([LoaderService], (service: LoaderService) => {
     expect(service).toBeTruthy();
   }));
 
   it('should issue a load books', async () => {
     service.loadBooks(2, 0)
-    .subscribe(response => {
-      expect(response.length).toBe(2);
-      expect(response[0].title).toEqual('Title 1');
-      expect(response[0].category).toEqual('Category 1');
-      expect(response[0].description).toEqual('Description 1');
-    });
+      .subscribe(response => {
+        expect(response.length).toBe(2);
+        expect(response[0].title).toEqual('Title 1');
+        expect(response[0].category).toEqual('Category 1');
+        expect(response[0].description).toEqual('Description 1');
+      });
 
+    // tslint:disable-next-line: no-shadowed-variable
     const req = httpTestingController.expectOne((req: HttpRequest<any>) => {
-      return req.method === 'GET'
+      return req.method === 'GET';
     }, '');
 
     expect(req.request.url).toBe(environment.api + 'book?pageSize=2&pageIndex=1');
@@ -69,9 +71,10 @@ describe('LoaderService', () => {
         expect(response).toBe(2);
       })
     );
-    
+
+    // tslint:disable-next-line: no-shadowed-variable
     const req = httpTestingController.expectOne((req: HttpRequest<any>) => {
-      return req.method === 'GET'
+      return req.method === 'GET';
     }, '');
 
     expect(req.request.url).toBe(environment.api + 'book/count');
@@ -88,11 +91,12 @@ describe('LoaderService', () => {
       })
     );
 
+    // tslint:disable-next-line: no-shadowed-variable
     const req = httpTestingController.expectOne((req: HttpRequest<any>) => {
-      return req.method === 'GET'
+      return req.method === 'GET';
     }, '');
 
-    expect(req.request.url).toBe(environment.api + 'book/options');    
+    expect(req.request.url).toBe(environment.api + 'book/options');
 
     req.flush(
       [

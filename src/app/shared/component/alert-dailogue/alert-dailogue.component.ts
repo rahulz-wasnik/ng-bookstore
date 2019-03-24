@@ -9,11 +9,11 @@ import { MatDialogRef } from '@angular/material';
 export class AlertDailogueComponent implements OnInit {
 
   constructor(private dialogRef: MatDialogRef<AlertDailogueComponent>) { }
-  
-    ngOnInit() {
-    }
-  
-    onOk(): void {
-      this.dialogRef.close(false);
-    }
+
+  ngOnInit() {
+  }
+
+  onOk(): void {
+    this.dialogRef.close(false);
+  }
 }
