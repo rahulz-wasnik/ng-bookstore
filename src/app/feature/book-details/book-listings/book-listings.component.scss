@@ -1,0 +1,27 @@
+
+mat-card {
+    margin: auto;
+    text-align: center;
+    background: transparent;
+}
+
+mat-paginator, mat-spinner {
+    background: transparent;
+}
+
+mat-spinner {
+    margin: auto;
+}
+
+mat-expansion-panel {
+    text-align: left
+}
+
+mat-card-title {
+    display: flex;
+    justify-content: space-between;
+}
+
+.mat-small {
+    word-break: break-all;
+}

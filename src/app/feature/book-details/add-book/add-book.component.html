@@ -1,0 +1,51 @@
+<div *ngIf="operationInProgress">
+  <app-progress-spinner></app-progress-spinner>
+</div>
+
+<div>
+    <mat-card *ngIf="!operationInProgress">
+        <mat-card-title>Add a book</mat-card-title>
+        <mat-card-content>
+          <form [formGroup]="appForm">
+            <div>
+              <mat-form-field>
+                <input matInput id="title" name="title" placeholder="Title *" formControlName="title" aria-label="title">
+                <mat-error *ngIf="title.touched && !title.valid && title.errors && title.errors.required">
+                  Please enter a title
+                </mat-error>
+              </mat-form-field>
+            </div>
+      
+            <div>
+              <mat-form-field>
+                <mat-select id="category" formControlName="category" placeholder="Category *" aria-label="category">
+                  <mat-option *ngFor="let option of options" value="{{option.value}}">{{option.label}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="category.touched && !category.valid && category.errors && category.errors.required">
+                  Please choose a category
+                </mat-error>
+              </mat-form-field>
+            </div>
+      
+            <div>
+              <mat-form-field>
+                <textarea matInput id="description" name="description" placeholder="Description *" formControlName="description" aria-label="description"
+                  rows="5"></textarea>
+                <mat-error *ngIf="description.touched && !description.valid && description.errors && description.errors.required">
+                  Please enter a description
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </form>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" [disabled]="additionInProgress" (click)="onAdd()" aria-disabled="false">
+            Add <i *ngIf="additionInProgress" class="fa fa-spinner fa-spin"></i></button>
+        </mat-card-actions>
+      </mat-card>
+</div>
+
+
+<div *ngIf="error" class="app-text-center mat-error app-mt-1 mat-body-1">
+    {{error}}
+</div>
