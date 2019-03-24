@@ -5,7 +5,7 @@ mat-card {
     background: transparent;
 }
 
-mat-paginator, mat-spinner {
+mat-paginator {
     background: transparent;
 }
 
@@ -24,4 +24,8 @@ mat-card-title {
 
 .mat-small {
     word-break: break-all;
+}
+
+:host /deep/ .mat-primary {
+    background: transparent !important;
 }
