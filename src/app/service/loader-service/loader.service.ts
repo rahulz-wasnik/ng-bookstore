@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
-import { catchError, shareReplay } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { shareReplay } from 'rxjs/operators';
 
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from './../../../environments/environment';
-import { ErrorHandlerService } from './../error-handler/error-handler.service';
 import { Book } from './../../model/book';
 import { Options } from './../../model/options';
 

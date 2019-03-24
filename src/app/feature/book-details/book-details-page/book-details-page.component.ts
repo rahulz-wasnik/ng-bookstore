@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Store, select } from '@ngrx/store';
+import { ActivatedRoute } from '@angular/router';
 
-import * as fromBookStore from "../store";
+import { AppService } from './../../../service/app-service/app.service';
 
 @Component({
   selector: 'app-book-details-page',
@@ -10,10 +10,11 @@ import * as fromBookStore from "../store";
 })
 export class BookDetailsPageComponent implements OnInit {
 
-  constructor(private store: Store<fromBookStore.State>) { }
+  constructor(private appService: AppService,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.store.dispatch(new fromBookStore.GetOptions());
+    this.appService.setOptions(this.route.snapshot.data.optionsData);
   }
 
 }

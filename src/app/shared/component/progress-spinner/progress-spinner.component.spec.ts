@@ -11,13 +11,13 @@ describe('ProgressSpinnerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProgressSpinnerComponent ],
+      declarations: [ProgressSpinnerComponent],
       imports: [
         MatCardModule,
         MatProgressSpinnerModule
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'ng-bookstore';
+
+  navigationInProgress = false;
+
+  constructor(private router: Router) {
+    router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        this.navigationInProgress = true;
+      }
+      if (event instanceof NavigationEnd) {
+        this.navigationInProgress = false;
+      }
+    });
+  }
 }

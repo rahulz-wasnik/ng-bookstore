@@ -14,6 +14,7 @@ import { Book } from './../../../model/book';
 import { Options } from './../../../model/options';
 import { AlertDailogueComponent } from './../../../shared/component/alert-dailogue/alert-dailogue.component';
 import { AppConstant } from './../../../shared/constant/app.constant';
+import { BookError } from './../../../shared/constant/error.constant';
 
 @Component({
   selector: 'app-add-book',
@@ -22,24 +23,23 @@ import { AppConstant } from './../../../shared/constant/app.constant';
 })
 export class AddBookComponent implements OnInit, OnDestroy {
 
-  componentActive: boolean = true;
+  componentActive = true;
   appForm: FormGroup;
-  error: string;  
-  operationInProgress: boolean;
+  error: string;
+  operationInProgress;
   options: Options[];
-  additionInProgress: boolean = false;
+  additionInProgress = false;
 
-  constructor(private appService: AppService, 
-    private dialog: MatDialog, 
+  constructor(private appService: AppService,
+    private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private store: Store<fromBookStore.State>) { }
 
   ngOnInit() {
+    this.options = this.appService.getOptions();
     this.getErrorFromStore();
     this.getOperationInProgressFromStore();
-    this.getOptionsFromStore();
     this.getActionStatusFromStore();
-
     this.appForm = new FormGroup({
       title: new FormControl('', Validators.required),
       category: new FormControl('', Validators.required),
@@ -51,17 +51,11 @@ export class AddBookComponent implements OnInit, OnDestroy {
     this.componentActive = false;
   }
 
-  getOptionsFromStore(): void {
-    this.store.pipe(select(fromBookStore.getOptions)).pipe(
-      takeWhile(() => this.componentActive)
-    ).subscribe(response => this.options = response);
-  }
-
   getErrorFromStore(): void {
     this.store.pipe(select(fromBookStore.getError)).pipe(
       takeWhile(() => this.componentActive)
     ).subscribe(
-      response => this.error = response 
+      response => this.error = response
     );
   }
 
@@ -76,9 +70,8 @@ export class AddBookComponent implements OnInit, OnDestroy {
       takeWhile(() => this.componentActive)
     ).subscribe(
       response => {
-        this.additionInProgress = false;
-        if(response === 1) {
-          this.onBookAdded();
+        if (response !== 0) {
+          this.onBookAdded(response);
         }
       }
     );
@@ -97,37 +90,43 @@ export class AddBookComponent implements OnInit, OnDestroy {
   }
 
   onAdd(): void {
-    if(this.appForm.valid) {
+    if (this.appForm.valid) {
       const dialogRef = this.dialog.open(ConfirmDailogueComponent, {
         width: '250px',
         disableClose: true
       });
-      
+
       dialogRef.afterClosed().subscribe(result => {
-        if(result) {
+        if (result) {
           this.additionInProgress = true;
           const book: Book = {
             _id: '',
             title: this.title.value,
             category: this.category.value,
             description: this.description.value
-          }
+          };
           this.store.dispatch(new fromBookStore.AddBook(book));
         }
-      }); 
+      });
     } else {
       this.appService.touchControls(this.appForm);
       this.dialog.open(AlertDailogueComponent, {
         width: '250px',
         disableClose: true
       });
-    }   
+    }
   }
 
-  onBookAdded() {
+  onBookAdded(value: number) {
+    let message = '';
+    if (value === 1) {
+      this.appForm.reset();
+      message = AppConstant.bookAddSuccess;
+    } else if (value === -1) {
+      message = BookError.addBookFail;
+    }
     this.additionInProgress = false;
-    this.appForm.reset();
-    this.snackBar.open(AppConstant.bookAddSuccess, '', {
+    this.snackBar.open(message, '', {
       duration: 2000,
     });
   }

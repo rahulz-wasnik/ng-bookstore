@@ -1,13 +1,11 @@
 
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { Actions, Effect, ofType } from "@ngrx/effects";
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { map, switchMap, catchError, tap, mapTo } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 import * as fromBookStore from './';
 import { LoaderService } from './../../../service/loader-service/loader.service';
-import { RouteConstant } from './../../../shared/constant/route.constant';
 import { BookManagementService } from './../../../service/book-management-service/book-management.service';
 import { BookError } from './../../../shared/constant/error.constant';
 import { ErrorHandlerService } from './../../../service/error-handler/error-handler.service';
@@ -19,7 +17,7 @@ export class BookEffect {
 
     constructor(private action$: Actions,
         private loaderService: LoaderService,
-        private bookManagementService: BookManagementService, 
+        private bookManagementService: BookManagementService,
         private errorHandlerService: ErrorHandlerService) {
     }
 
@@ -32,25 +30,25 @@ export class BookEffect {
     @Effect()
     getOptions$ = this.action$.pipe(
         ofType(fromBookStore.BookActionTypes.GetOptions),
-        switchMap(() => 
+        switchMap(() =>
             this.loaderService.getOptions().pipe(
-            map(_resp => new fromBookStore.GetOptionsSuccess(_resp)),
-            catchError((error) => {
-                this.errorHandlerService.handleError(error);
-                return of(new fromBookStore.GetOptionsFail(BookError.getOptionsFail));
-            }))
+                map(_resp => new fromBookStore.GetOptionsSuccess(_resp)),
+                catchError((error) => {
+                    this.errorHandlerService.handleError(error);
+                    return of(new fromBookStore.GetOptionsFail(BookError.getOptionsFail));
+                }))
         ));
 
     @Effect()
     getTotalNumberOfBooks$ = this.action$.pipe(
         ofType(fromBookStore.BookActionTypes.GetTotalNumberOfBooks),
-        switchMap(() => 
+        switchMap(() =>
             this.loaderService.getTotalNumberOfBooks().pipe(
-            map(_resp => new fromBookStore.GetTotalNumberOfBooksSuccess(_resp)),
-            catchError((error) => {
-                this.errorHandlerService.handleError(error);
-                return of(new fromBookStore.GetTotalNumberOfBooksFail(BookError.loadBookFail));
-            }))
+                map(_resp => new fromBookStore.GetTotalNumberOfBooksSuccess(_resp)),
+                catchError((error) => {
+                    this.errorHandlerService.handleError(error);
+                    return of(new fromBookStore.GetTotalNumberOfBooksFail(BookError.loadBookFail));
+                }))
         ));
 
     @Effect()
@@ -79,7 +77,7 @@ export class BookEffect {
     @Effect()
     deleteBook$ = this.action$.pipe(
         ofType(fromBookStore.BookActionTypes.DeleteBook),
-        switchMap((action: fromBookStore.DeleteBook)  => this.bookManagementService.delete(action.payload).pipe(
+        switchMap((action: fromBookStore.DeleteBook) => this.bookManagementService.delete(action.payload).pipe(
             map(response => new fromBookStore.DeleteBookSuccess(response)),
             catchError((error) => {
                 this.errorHandlerService.handleError(error);

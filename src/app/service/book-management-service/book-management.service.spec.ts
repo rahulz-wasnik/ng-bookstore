@@ -1,10 +1,9 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { HttpClientModule, HttpRequest } from '@angular/common/http';
+import { HttpRequest } from '@angular/common/http';
 
 import { BookManagementService } from './book-management.service';
 import { Book } from './../../model/book';
-import { environment } from './../../../environments/environment';
 
 describe('BookManagementService', () => {
 
@@ -25,6 +24,7 @@ describe('BookManagementService', () => {
     httpTestingController.verify();
   });
 
+  // tslint:disable-next-line: no-shadowed-variable
   it('should be created', inject([BookManagementService], (service: BookManagementService) => {
     expect(service).toBeTruthy();
   }));
@@ -32,17 +32,18 @@ describe('BookManagementService', () => {
   it('should add a book and return the Observable<Book> with a unique id', async () => {
     const book: Book = {
       _id: '',
-      title:  'Title',
-      category:  'Category',
-      description:  'Description'
-    }
+      title: 'Title',
+      category: 'Category',
+      description: 'Description'
+    };
     service.add(book)
       .subscribe(response => {
         expect(response._id).toBe('1');
       });
 
+    // tslint:disable-next-line: no-shadowed-variable
     const req = httpTestingController.expectOne((req: HttpRequest<any>) => {
-      return req.method === 'POST'
+      return req.method === 'POST';
     }, '');
 
     expect(req.request.url).toContain('book/add');
@@ -59,8 +60,9 @@ describe('BookManagementService', () => {
 
     service.delete('1').subscribe();
 
+    // tslint:disable-next-line: no-shadowed-variable
     const req = httpTestingController.expectOne((req: HttpRequest<any>) => {
-      return req.method === 'DELETE'
+      return req.method === 'DELETE';
     }, '');
 
     expect(req.request.url).toContain('book/delete/1');

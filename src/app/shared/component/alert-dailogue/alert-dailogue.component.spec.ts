@@ -32,7 +32,7 @@ describe('AlertDailogueComponent', () => {
     fixture = TestBed.createComponent(AlertDailogueComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    matDialogRef = TestBed.get(MatDialogRef)
+    matDialogRef = TestBed.get(MatDialogRef);
   });
 
   it('should create', () => {
@@ -52,7 +52,7 @@ describe('AlertDailogueComponent', () => {
   it('should call the onOk function when the Ok button is clicked', async(() => {
     spyOn(component, 'onOk');
 
-    let button = fixture.debugElement.nativeElement.querySelector('button');
+    const button = fixture.debugElement.nativeElement.querySelector('button');
     button.click();
 
     fixture.whenStable().then(() => {

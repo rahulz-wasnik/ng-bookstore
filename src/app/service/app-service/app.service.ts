@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Options } from './../../model/options';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppService {
 
+  private options: Options[];
+
   constructor() { }
 
-  /**
-   * @description Touches controls of the form object passed by calling the markAsTouched function on every control in the form
-   * @param form 
-   */
   touchControls(form: FormGroup): void {
     Object.keys(form.controls).forEach((element) => {
       if (form.controls[element] instanceof FormGroup) {
@@ -19,5 +18,13 @@ export class AppService {
       }
       form.controls[element].markAsTouched();
     });
+  }
+
+  setOptions(data: Options[]): void {
+    this.options = data;
+  }
+
+  getOptions(): Options[] {
+    return this.options;
   }
 }

@@ -33,7 +33,7 @@ describe('ConfirmDailogueComponent', () => {
     fixture = TestBed.createComponent(ConfirmDailogueComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    matDialogRef = TestBed.get(MatDialogRef)
+    matDialogRef = TestBed.get(MatDialogRef);
   });
 
   it('should create', () => {
@@ -59,7 +59,7 @@ describe('ConfirmDailogueComponent', () => {
   it('should call the onOk event when the Ok button is clicked', async(() => {
     spyOn(component, 'onOk');
 
-    let button = fixture.debugElement.queryAll(By.css('button'))[1].nativeElement;
+    const button = fixture.debugElement.queryAll(By.css('button'))[1].nativeElement;
     console.log(button);
     button.click();
 
@@ -71,7 +71,7 @@ describe('ConfirmDailogueComponent', () => {
   it('should call the onClose event when the Ok button is clicked', async(() => {
     spyOn(component, 'onClose');
 
-    let button = fixture.debugElement.queryAll(By.css('button'))[0].nativeElement;
+    const button = fixture.debugElement.queryAll(By.css('button'))[0].nativeElement;
     button.click();
 
     fixture.whenStable().then(() => {

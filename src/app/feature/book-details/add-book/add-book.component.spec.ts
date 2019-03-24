@@ -1,6 +1,6 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { NO_ERRORS_SCHEMA } from "@angular/core";
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { MatDialog, MatSnackBar, MatDialogRef } from '@angular/material';
@@ -74,28 +74,12 @@ describe('AddBookComponent', () => {
   });
 
   it('should initialize to capture events from the store', () => {
-    spyOn(component, 'getOptionsFromStore').and.callThrough();
     spyOn(component, 'getErrorFromStore').and.callThrough();
     spyOn(component, 'getActionStatusFromStore').and.callThrough();
     component.ngOnInit();
-    expect(component.getOptionsFromStore).toHaveBeenCalled();
     expect(component.getErrorFromStore).toHaveBeenCalled();
     expect(component.getActionStatusFromStore).toHaveBeenCalled();
   });
-
-  it('should get the options from store', fakeAsync(() => {
-    const mockData = [
-      {
-        label: 'History',
-        value: 'ca_1'
-      }
-    ]
-    spyOn(store, 'pipe').and.returnValue(of(mockData));
-    component.getOptionsFromStore();
-    expect(store.pipe).toHaveBeenCalled();
-    expect(component.options).toBe(mockData);
-    tick(100);
-  }));
 
   it('should get the error from store', fakeAsync(() => {
     spyOn(store, 'pipe').and.returnValue(of('An error has occured'));
@@ -105,7 +89,7 @@ describe('AddBookComponent', () => {
     tick(100);
   }));
 
-  it(`should get actionStatus value from store and call 
+  it(`should get actionStatus value from store and call
     the onBookDeleted method if the book was deleted suceesfull`, fakeAsync(() => {
     spyOn(store, 'pipe').and.returnValue(of(1));
     spyOn(component, 'onBookAdded').and.returnValue(of(1));
@@ -165,10 +149,10 @@ describe('AddBookComponent', () => {
     component.appForm.get('description').setValue('description');
     const book: Book = {
       _id: '',
-      title:  component.appForm.get('title').value,
-      category:  component.appForm.get('category').value,
-      description:  component.appForm.get('description').value
-    }
+      title: component.appForm.get('title').value,
+      category: component.appForm.get('category').value,
+      description: component.appForm.get('description').value
+    };
     spyOn(matDialog, 'open').and.callThrough();
     spyOn(store, 'dispatch').and.callThrough();
     component.onAdd();
@@ -178,18 +162,32 @@ describe('AddBookComponent', () => {
       new fromBookStore.AddBook(book));
   });
 
-  it('should open a snackbar with a confirmation message', () => {
+  it('should open a snackbar with a confirmation message and clear the form fields', () => {
     component.appForm.get('title').setValue('Title');
     component.appForm.get('category').setValue('category');
     component.appForm.get('description').setValue('description');
     fixture.detectChanges();
     spyOn(snackBar, 'open').and.callThrough();
-    component.onBookAdded();
+    component.onBookAdded(1);
     expect(snackBar.open).toHaveBeenCalled();
     expect(component.additionInProgress).toBeFalsy();
     expect(component.appForm.get('title').value).toBe(null);
     expect(component.appForm.get('category').value).toBe(null);
     expect(component.appForm.get('category').value).toBe(null);
+  });
+
+  it('should open a snackbar with a error message and not clear the form fields', () => {
+    component.appForm.get('title').setValue('Title');
+    component.appForm.get('category').setValue('category');
+    component.appForm.get('description').setValue('description');
+    fixture.detectChanges();
+    spyOn(snackBar, 'open').and.callThrough();
+    component.onBookAdded(-1);
+    expect(snackBar.open).toHaveBeenCalled();
+    expect(component.additionInProgress).toBeFalsy();
+    expect(component.appForm.get('title').value).toBe('Title');
+    expect(component.appForm.get('category').value).toBe('category');
+    expect(component.appForm.get('description').value).toBe('description');
   });
 
   it('should display a title field when the page is loaded', () => {
@@ -201,7 +199,7 @@ describe('AddBookComponent', () => {
   });
 
   it('should display a description field when the page is loaded', () => {
-        expect(fixture.debugElement.query(By.css('#description'))).toBeTruthy();
+    expect(fixture.debugElement.query(By.css('#description'))).toBeTruthy();
   });
 
   it('should display an error when the title field is touched and is left empty', () => {
@@ -224,7 +222,7 @@ describe('AddBookComponent', () => {
 
   it('should call the onAdd event when the Add button is clicked', async(() => {
     spyOn(component, 'onAdd');
-    let button = fixture.debugElement.nativeElement.querySelector('button');
+    const button = fixture.debugElement.nativeElement.querySelector('button');
     button.click();
     fixture.whenStable().then(() => {
       expect(component.onAdd).toHaveBeenCalled();
@@ -240,10 +238,4 @@ describe('AddBookComponent', () => {
     });
   }));
 
-  it('should display progress spinner when options are loading', () => {
-    component.operationInProgress = true;
-    fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('app-progress-spinner')).nativeElement).toBeTruthy();
-  });
-  
 });
